@@ -7,9 +7,9 @@ abstract public class Item
 {
 
     //Name of the item
-    String name = null;
+    private String name = null;
     //Description of item
-    String desc = null;
+    private String desc = null;
 
     public void setName(String name)
     {
@@ -24,7 +24,6 @@ abstract public class Item
     {
         return name;
     }
-
     public String getDesc()
     {
         return desc;

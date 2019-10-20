@@ -1,7 +1,6 @@
 //Basic room class. Every room inherits from this.
 
 import java.util.Map;
-
 /**
  *
  * @author Eric
@@ -16,7 +15,9 @@ abstract public class Room
     //Description of the room as seen form adjacent rooms
     private String externalDesc;
     //Directions the player can move in and the description of the location
-    private Map<String, String> directions = null;
+    private Map<String, Room> directions = null;
+    //Keep the player in a room until a condition is met
+    private boolean exit = false;
 
     public void setName(String name)
     {
@@ -47,5 +48,4 @@ abstract public class Room
     {
         return externalDesc;
     }
-    
 }
