@@ -51,21 +51,28 @@ public class Player
     public boolean doAction(String parsedInput)
     {
         boolean done = false;
-        if (parsedInput.charAt(0) == 'w' || parsedInput.charAt(0) == 'n'
-                || parsedInput.charAt(0) == 'e' || parsedInput.charAt(0) == 's'
-                || parsedInput.charAt(0) == 'u' || parsedInput.charAt(0) == 'd')
+        switch (parsedInput.charAt(0))
         {
-            done = currentRoom.changeRoom(parsedInput);
-        }else if(parsedInput.charAt(0) == 'x')
-        {
-            done = currentRoom.getRoomDesc();
-        }
-        else if (parsedInput.charAt(0) == 'q')
-        {
-            //implement quir functionality
-        }else if(parsedInput.charAt(0) == 'h')
-        {
-            //implement help function
+            case 'w':
+            case 'n':
+            case 'e':
+            case 's':
+            case 'u':
+            case 'd':
+                done = currentRoom.changeRoom(parsedInput);
+                break;
+            //examine room
+            case 'x':
+                done = currentRoom.getRoomDesc();
+                break;
+        //implement quit functionality
+            case 'q':
+                break;
+        //implement help function
+            case 'h':
+                break;
+            default:
+                break;
         }
         return done;
     }

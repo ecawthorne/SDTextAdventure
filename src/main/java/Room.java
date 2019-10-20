@@ -19,8 +19,6 @@ abstract public class Room
     private String externalDesc = null;
     //Directions the player can move in and the description of the location
     private Map<String, Room> doors = null;
-    //All items in room
-    private Item[] items;
     //Keep the player in a room until a condition is met
     private boolean exit = false;
 
@@ -29,9 +27,9 @@ abstract public class Room
         this.name = name;
     }
 
-    public String getIntro()
+    public void getIntro()
     {
-        return intro;
+        System.out.println(this.intro);
     }
 
     public void setIntro(String intro)
@@ -63,18 +61,6 @@ abstract public class Room
     {
         return externalDesc;
     }
-    //Handle exception here or limit input
-    public Item getItem(int slot)
-    {
-        return items[slot];
-    }
-
-    public void setItem(Item addedItem)
-    {
-        //Make sure this works. Might have off by one or other error
-        items[this.items.length] = addedItem;
-    }
-    
 
     boolean changeRoom(String direction)
     {

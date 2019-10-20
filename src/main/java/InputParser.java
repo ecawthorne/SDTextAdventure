@@ -46,7 +46,7 @@ public class InputParser
                     default:
                         break;
                 }
-            }
+            }else if(true){}//Other inputs (pick up, use, drop, etc.)
         }
         return false;
     }

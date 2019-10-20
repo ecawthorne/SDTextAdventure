@@ -6,23 +6,23 @@
 class InitialRoom extends Room
 {
 
-    Item[] items;
+    Item[] items = new Item[2];
 
     InitialRoom()
     {
         setName("House");
         setIntro("“Once upon a time, there was a lonely orphan farmer boy who "
                 + "\nwas having a sentimental dream about his pet dog."
-                + "\n Suddenly, he started sweating from the rising"
-                + "\n temperatures in his room. The farmer boy wakes up to see"
-                + "\n his room up in flames and hears war cries outside! He"
-                + "\n calls out for his dog, “Bubbles, where are you!?”. "
+                + "\nSuddenly, he started sweating from the rising"
+                + "\ntemperatures in his room. The farmer boy wakes up to see"
+                + "\nhis room up in flames and hears war cries outside! He"
+                + "\ncalls out for his dog, “Bubbles, where are you!?”. "
                 + "\nThe dog doesn’t respond and is nowhere to be seen. "
                 + "\nHe needs to find a way to escape, but first he needs to"
-                + "\n find his pitch fork. “Nobody messes with my dog!\"");
+                + "\nfind his pitch fork. “Nobody messes with my dog!\"");
         setInternalDesc("It's your house");
-        setItem(new Item("Wardrobe", "It's a wardrobe."));
-        setItem(new Item("Pitchfork", "Its a pitchfork"));
+        items[0] = new Item("Wardrobe", "It's a wardrobe.");
+        items[1] = new Item("Pitchfork", "Its a pitchfork");
     }
 
     
