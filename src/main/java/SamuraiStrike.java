@@ -1,3 +1,4 @@
+
 /**
  *
  * @author Eric
@@ -14,7 +15,7 @@ public class SamuraiStrike
         //gameplay loop
         while (true && player1.isAlive())
         {
-            
+
         }
 
     }

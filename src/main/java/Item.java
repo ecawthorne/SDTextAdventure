@@ -1,9 +1,10 @@
 //Basic item class. All items inherit from this.
+
 /**
  *
  * @author Eric
  */
-abstract public class Item
+public class Item
 {
 
     //Name of the item
@@ -11,6 +12,12 @@ abstract public class Item
     //Description of item
     private String desc = null;
 
+    public Item(String name, String desc)
+    {
+        this.name = name;
+        this.desc = desc;
+    }
+    
     public void setName(String name)
     {
         this.name = name;
@@ -20,10 +27,12 @@ abstract public class Item
     {
         this.desc = desc;
     }
+
     public String getName()
     {
         return name;
     }
+
     public String getDesc()
     {
         return desc;

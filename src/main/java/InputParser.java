@@ -1,6 +1,4 @@
 
-import java.lang.Object;
-
 /**
  *
  * @author Eric
@@ -21,7 +19,7 @@ public class InputParser
 
     public boolean isValid(String input)
     {
-        if(input != null)
+        if (input != null)
         {
             if (input.length() == 1)
             {
@@ -51,14 +49,5 @@ public class InputParser
             }
         }
         return false;
-    }
-
-    public char getAction(String input)
-    {
-        char action = null;
-        if (isValid())
-        {
-
-        }
     }
 }

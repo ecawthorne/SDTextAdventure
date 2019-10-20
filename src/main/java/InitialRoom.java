@@ -1,29 +1,30 @@
+
 /**
  *
  * @author Eric
  */
 class InitialRoom extends Room
 {
+
     Item[] items;
-    
+
     InitialRoom()
     {
+        setName("House");
+        setIntro("“Once upon a time, there was a lonely orphan farmer boy who "
+                + "\nwas having a sentimental dream about his pet dog."
+                + "\n Suddenly, he started sweating from the rising"
+                + "\n temperatures in his room. The farmer boy wakes up to see"
+                + "\n his room up in flames and hears war cries outside! He"
+                + "\n calls out for his dog, “Bubbles, where are you!?”. "
+                + "\nThe dog doesn’t respond and is nowhere to be seen. "
+                + "\nHe needs to find a way to escape, but first he needs to"
+                + "\n find his pitch fork. “Nobody messes with my dog!\"");
         setInternalDesc("It's your house");
-        items[0].setName("Wardrobe");
-        items[0].setDesc("It's a wardrobe.");
-        //Hidden in wardrobe
-        items[1].setName("Pitchfork");
-        items[2].setDesc("Its a pitchfork");
+        setItem(new Item("Wardrobe", "It's a wardrobe."));
+        setItem(new Item("Pitchfork", "Its a pitchfork"));
     }
-    public void getRoomDesc()
-    {
-        /* Need to implement a way to hide certain items before using this
-        System.out.println(getInternalDesc());
-        for(int i = 0; i < items.length; i++)
-        {
-            System.out.println("You see a " + items[i].getName());
-        }
-        */
-    }
+
     
+
 }
