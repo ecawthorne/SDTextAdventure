@@ -2,6 +2,7 @@
 /**
  *
  * @author Eric
+ * edited by Chase 10/22/2019
  */
 public class Player
 {
@@ -38,15 +39,6 @@ public class Player
         this.alive = alive;
     }
 
-    public Room getCurrentRoom()
-    {
-        return currentRoom;
-    }
-
-    public void setCurrentRoom(Room currentRoom)
-    {
-        this.currentRoom = currentRoom;
-    }
 
     public boolean doAction(String parsedInput)
     {

@@ -22,7 +22,7 @@ class InitialRoom extends Room
                 + "\nfind his pitch fork. “Nobody messes with my dog!\"");
         setInternalDesc("It's your house");
         items[0] = new Item("Wardrobe", "It's a wardrobe.");
-        items[1] = new Item("Pitchfork", "Its a pitchfork");
+        items[1] = new Item("Pitchfork", "Its a pitchfork.");
     }
 
     

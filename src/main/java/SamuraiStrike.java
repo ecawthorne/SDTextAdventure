@@ -19,6 +19,7 @@ public class SamuraiStrike
         //menu followed by
         //gameplay loop
         System.out.println(intro);
+		//true being replaced by boolean for continuePlaying
         while (true && player1.isAlive())
         {
             //Move this or add flag so it only outputs once
