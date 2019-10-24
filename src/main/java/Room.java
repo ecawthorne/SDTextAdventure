@@ -85,9 +85,9 @@ public abstract class Room
         this.name = name;
     }
 
-    public void getIntro()
+    public String getIntro()
     {
-        System.out.println(this.intro);
+        return this.intro;
     }
 
     private void setIntro(String intro)
@@ -200,9 +200,18 @@ public abstract class Room
         itemList.add(item);
     }
 
-    public void printItems()
+    public string getItems()
     {
+		string visibleItems;
+		for(i = 0; i < itemList.length; i++)
+		{
+			if(itemList[i].getVisibility())
+			{
+				visibleItems = visibleItems + "\n" + itemList[i];
+			}
+		}
         //for loop printing item list
+		return visibleItems;
     }
     public FileInputStream getFile()
     {

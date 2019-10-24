@@ -18,6 +18,42 @@ public class GameManager
         constructRooms();
         currentRoom = new InitialRoom();
     }
+	
+	public void EnterRoom()
+	{
+		System.out.println(currentRoom.getIntro());
+		System.out.println("The following items are in this room: ");
+		System.out.println(currentRoom.getItems());
+		for(int i = 1; i <= 4; i++)
+		{
+			string direction;
+			switch(i)
+			{
+				case(1):
+					direction = "north";
+					break;
+				case(2):
+					direction = "south";
+					break;
+				case(3):
+					direction = "east";
+					break;
+				case(4):
+					direction = "west";
+					break;
+				default:
+					direction = "ERROR: PLEASE REPORT DIRECTION BUG TO DEVELOPER.";
+					break;
+			}
+			connectedRoom = currentRoom.getConnection(i)
+			if(connectedRoom !+ null)
+			{
+				System.out.println(connectedRoom.getName() + " is to your " + direction + ".");
+			}
+		}
+		
+		System.out.println("\n");
+	}
 
     public boolean isGameOver()
     {
@@ -80,6 +116,7 @@ public class GameManager
     public void look()
     {
         System.out.println(currentRoom.getRoomDesc());
+		System.out.println(currentRoom.getItems());
     }
 
     public void examine(/**/)
@@ -100,6 +137,7 @@ public class GameManager
     public void setCurrentRoom(Room currentRoom)
     {
         this.currentRoom = currentRoom;
+		EnterRoom();
     }
 
     public void movePlayer(int direction)

@@ -3,9 +3,11 @@
  *
  * @author Eric
  * edited by Chase 10/22/2019
+ * edited by Chase 10/23/2019
  */
 public class Player
 {
+
 
     //Player name
     private String name = null;
@@ -54,14 +56,16 @@ public class Player
                 done = currentRoom.changeRoom(parsedInput);
                 break;
             //examine room
-            case 'x':
-                done = currentRoom.getRoomDesc();
+            case 'l':
+                done = currentRoom.getRoomDesc(); //future update will check if 'l' is followed by anything, and then provide a description of whatever is being looked at
                 break;
         //implement quit functionality
             case 'q':
+				setAlive(false);
                 break;
         //implement help function
             case 'h':
+				//displayHelpMessage;
                 break;
             default:
                 break;
