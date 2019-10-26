@@ -23,10 +23,10 @@ public class SamuraiStrike
             + "\'w\' will head west, when possible. \n"
             + "\'u\' will head up, when possible. \n"
             + "\'d\' will head down, when possible. \n"
+            + "\'take <item>\' will allow you to pick up items in the room"
             + "\'l\' will look, providing a description of the room. \n"
             + "\'q\' will quit the game. \n"
             + "";
-    //
 
     public static void main(String[] args)
     {
@@ -55,9 +55,10 @@ public class SamuraiStrike
 
         while (manager.isPlayerAlive())
         {
+            System.out.println("What do you want to do?");
             //get user input
-            input = keyboard.next();
-            manager.doAction(input);
+            input = keyboard.nextLine();
+            manager.parseInput(input);
         }
 
         keyboard.close();
