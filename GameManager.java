@@ -23,7 +23,7 @@ public class GameManager
     {
         System.out.println(currentRoom.getIntro());
         System.out.println("The following items are in this room: ");
-        System.out.println(currentRoom.getItems());
+        
         for (int i = 1; i <= 4; i++)
         {
             String direction;
@@ -72,57 +72,82 @@ public class GameManager
         playerInput.close();
     }
 
+    //Checks that  the input is valid
+    //and performs actions depending on entered values
     public void parseInput(String input)
     {
-        if (input.length() == 1)
+        //Research possible better ways to parse the players input
+        if (!input.isEmpty())
         {
-            switch (input.charAt(0))
+            if (input.length() == 1)
             {
-                case 'n':
-                    movePlayer(1);
-                    break;
-                case 'w':
-                    movePlayer(2);
-                    break;
-                case 'e':
-                    movePlayer(3);
-                    break;
-                case 's':
-                    movePlayer(4);
-                    break;
-                case 'u':
-                    movePlayer(5);
-                    break;
-                case 'd':
-                    movePlayer(6);
-                    break;
-                case 'l':
-                    look();
-                    break;
-                case 'h':
-                    getHelp();
-                case 'q':
-                    quitGame();
-                    break;
-                default:
-                    break;
-            }
-        } else if (input.toLowerCase().split(" ")[0].equals("take"))//This will cause errors in some cases
-        {
-            String[] inputArray = input.toLowerCase().split(" ");
-            for (int i = 0; i < currentRoom.getItemList().size(); i++)
-            {
-                if (currentRoom.getItemList().get(i).getName().equals(inputArray[1]))
+                switch (input.charAt(0))
                 {
-                    //This probably won't work but check just in case i.e. reference vs. copy
-                    player.getItemList().add(currentRoom.getItemList().get(i));
-                    currentRoom.getItemList().remove(i);
-                    break;//Maybe find a better way to do this
+                    case 'n':
+                        movePlayer(1);
+                        break;
+                    case 'w':
+                        movePlayer(2);
+                        break;
+                    case 'e':
+                        movePlayer(3);
+                        break;
+                    case 's':
+                        movePlayer(4);
+                        break;
+                    case 'u':
+                        movePlayer(5);
+                        break;
+                    case 'd':
+                        movePlayer(6);
+                        break;
+                    case 'l':
+                        look();
+                        break;
+                    case 'i':
+                        if (!player.getItemList().isEmpty())
+                        {
+                            for(int i = 0; i < player.getItemList().size(); i++)
+                            {
+                                if(player.getItemList().get(i).getVisibility())
+                                {
+                                    System.out.println(player.getItemList().get(i).getName());
+                                }
+                            }
+                        }else
+                            System.out.println("You dont have any items!");
+                        break;
+                    case 'h':
+                        getHelp();
+                    case 'q':
+                        quitGame();
+                        break;
+                    default:
+                        break;
                 }
+            } else if (input.toLowerCase().split(" ")[0].equals("take"))//This will cause errors in some cases
+            {
+                //Move this into a method at some point and fix likely error
+                String[] inputArray = input.toLowerCase().split(" ");
+                for (int i = 0; i < currentRoom.getItemList().size(); i++)
+                {
+                    if (currentRoom.getItemList().get(i).getName().toLowerCase().equals(inputArray[1]))
+                    {
+                        //This probably won't work but check just in case i.e. reference vs. copy
+                        player.addItem(currentRoom.getItemList().get(i));
+                        //Overload getItemList in future
+                        System.out.println("You got the " + currentRoom.getItemList().get(i).getName());
+                        currentRoom.removeItem(i);
+                        break;//Maybe find a better way to do this
+                    }
+                }
+            } else
+            {
+                System.out.println("I don't understand that. Try again");
             }
         } else
         {
-            System.out.println("I don't understand that. Try again");
+            System.out.println("Enter a command or type \'h\' for help");
         }
     }
 
@@ -156,11 +181,10 @@ public class GameManager
     public void movePlayer(int direction)
     {
         Room toMove = currentRoom.getConnection(direction);
-        if(!currentRoom.isLeavable())
+        if (!currentRoom.isLeavable())
         {
             System.out.println(currentRoom.getLeaveCondition());
-        }
-        if (toMove != null)
+        } else if (toMove != null)
         {
             setCurrentRoom(toMove);
         } else
@@ -169,6 +193,7 @@ public class GameManager
         }
     }
 
+    //Constructs the game map and sets all connections
     public void constructRooms()
     {
         //hardcode rooms built for game
@@ -176,22 +201,25 @@ public class GameManager
         InitialRoom mainRoom = new InitialRoom();
         VillageRoom village = new VillageRoom();
         currentRoom = mainRoom;
+        //Direction should be checked. Just setting in order to test
+        mainRoom.setConnection(1, village);
         //Are we making each room a unique object?        
         //Room village = new Room("the village", 2, null, mainRoom);
         //example of adding items below, to be moved to another method or class
         village.addItem(new Item("foo", "jar"));
     }
 
+    //Possibly redundant
     private void quitGame()
     {
-        gameOver = true;
+        player.setAlive(false);
     }
 
     public boolean isPlayerAlive()
     {
         return player.isAlive();
     }
-    
+
     public boolean doAction(String parsedInput)
     {
         boolean done = false;
