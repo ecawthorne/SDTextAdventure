@@ -18,42 +18,42 @@ public class GameManager
     {
         constructRooms();
     }
-	
-	public void EnterRoom()
-	{
-		System.out.println(currentRoom.getIntro());
-		System.out.println("The following items are in this room: ");
-		System.out.println(currentRoom.getItems());
-		for(int i = 1; i <= 4; i++)
-		{
-			String direction;
-			switch(i)
-			{
-				case(1):
-					direction = "north";
-					break;
-				case(2):
-					direction = "south";
-					break;
-				case(3):
-					direction = "east";
-					break;
-				case(4):
-					direction = "west";
-					break;
-				default:
-					direction = "ERROR: PLEASE REPORT DIRECTION BUG TO DEVELOPER.";
-					break;
-			}
-			Room connectedRoom = currentRoom.getConnection(i);
-			if(connectedRoom != null)
-			{
-				System.out.println(connectedRoom.getName() + " is to your " + direction + ".");
-			}
-		}
-		
-		System.out.println("\n");
-	}
+
+    public void EnterRoom()
+    {
+        System.out.println(currentRoom.getIntro());
+        System.out.println("The following items are in this room: ");
+        System.out.println(currentRoom.getItems());
+        for (int i = 1; i <= 4; i++)
+        {
+            String direction;
+            switch (i)
+            {
+                case (1):
+                    direction = "north";
+                    break;
+                case (2):
+                    direction = "south";
+                    break;
+                case (3):
+                    direction = "east";
+                    break;
+                case (4):
+                    direction = "west";
+                    break;
+                default:
+                    direction = "ERROR: PLEASE REPORT DIRECTION BUG TO DEVELOPER.";
+                    break;
+            }
+            Room connectedRoom = currentRoom.getConnection(i);
+            if (connectedRoom != null)
+            {
+                System.out.println(connectedRoom.getName() + " is to your " + direction + ".");
+            }
+        }
+
+        System.out.println("\n");
+    }
 
     public boolean isGameOver()
     {
@@ -107,17 +107,29 @@ public class GameManager
                 default:
                     break;
             }
+        } else if (input.toLowerCase().split(" ")[0].equals("take"))//This will cause errors in some cases
+        {
+            String[] inputArray = input.toLowerCase().split(" ");
+            for (int i = 0; i < currentRoom.getItemList().size(); i++)
+            {
+                if (currentRoom.getItemList().get(i).getName().equals(inputArray[1]))
+                {
+                    //This probably won't work but check just in case i.e. reference vs. copy
+                    player.getItemList().add(currentRoom.getItemList().get(i));
+                    currentRoom.getItemList().remove(i);
+                    break;//Maybe find a better way to do this
+                }
+            }
         } else
         {
-            System.out.println("I don't understand that. Please enter only one"
-                    + " character");
+            System.out.println("I don't understand that. Try again");
         }
     }
 
     public void look()
     {
         System.out.println(currentRoom.getRoomDesc());
-		System.out.println(currentRoom.getItems());
+        System.out.println(currentRoom.getItems());
     }
 
     public void examine(/**/)
@@ -138,12 +150,16 @@ public class GameManager
     public void setCurrentRoom(Room currentRoom)
     {
         this.currentRoom = currentRoom;
-		EnterRoom();
+        EnterRoom();
     }
 
     public void movePlayer(int direction)
     {
         Room toMove = currentRoom.getConnection(direction);
+        if(!currentRoom.isLeavable())
+        {
+            System.out.println(currentRoom.getLeaveCondition());
+        }
         if (toMove != null)
         {
             setCurrentRoom(toMove);
@@ -158,9 +174,10 @@ public class GameManager
         //hardcode rooms built for game
         //example below
         InitialRoom mainRoom = new InitialRoom();
+        VillageRoom village = new VillageRoom();
         currentRoom = mainRoom;
         //Are we making each room a unique object?        
-        Room village = new Room("the village", 2, null, mainRoom);
+        //Room village = new Room("the village", 2, null, mainRoom);
         //example of adding items below, to be moved to another method or class
         village.addItem(new Item("foo", "jar"));
     }
@@ -174,7 +191,7 @@ public class GameManager
     {
         return player.isAlive();
     }
-
+    
     public boolean doAction(String parsedInput)
     {
         boolean done = false;
@@ -191,16 +208,16 @@ public class GameManager
                 break;
             //examine room
             case 'l':
-                done = currentRoom.getRoomDesc(); 
+                done = currentRoom.getRoomDesc();
                 //future update will check if 'l' is followed by anything, and then provide a description of whatever is being looked at
                 break;
-        //implement quit functionality
+            //implement quit functionality
             case 'q':
-				player.setAlive(false);
+                player.setAlive(false);
                 break;
-        //implement help function
+            //implement help function
             case 'h':
-				//displayHelpMessage;
+                //displayHelpMessage;
                 break;
             default:
                 break;
