@@ -23,6 +23,7 @@ public class GameManager
     {
         System.out.println(currentRoom.getIntro());
         System.out.println("The following items are in this room: ");
+        currentRoom.getItemList().forEach((n) -> System.out.println(n.getName()));
         
         for (int i = 1; i <= 4; i++)
         {
