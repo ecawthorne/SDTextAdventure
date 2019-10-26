@@ -20,13 +20,14 @@ public class Item
         this.name = name;
         this.desc = desc;
     }
+
     public Item(String name, String desc, boolean isVisible)
     {
         this.name = name;
         this.desc = desc;
         this.isVisible = isVisible;
     }
-    
+
     public void setName(String name)
     {
         this.name = name;
@@ -46,15 +47,15 @@ public class Item
     {
         return desc;
     }
-	
-	public void setVisibility(boolean isVisible)
-	{
-		this.isVisible = isVisible;
-	}
-	
-	public boolean getVisibility()
-	{
-		return isVisible;
-	}
+
+    public void setVisibility(boolean isVisible)
+    {
+        this.isVisible = isVisible;
+    }
+
+    public boolean getVisibility()
+    {
+        return isVisible;
+    }
 
 }

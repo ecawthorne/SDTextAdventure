@@ -9,9 +9,9 @@ import java.util.ArrayList;
  *
  * @author Eric
  */
-public class Room
+abstract public class Room
 {
-    
+
     //Gets file and handles possible exception
     final FileInputStream ROOMDESCRIPTIONS = getFile();
     //file variable for containing descriptions
@@ -26,13 +26,19 @@ public class Room
     //Description of the room as seen form adjacent rooms
     private String externalDesc = null;
     //Keep the player in a room until a condition is met
-    //private boolean canLeave = false;
+    private boolean leavable = false;
+    //Instructions or hints for leaving the room
+    private String leaveCond = null;
 
     //direction variables for next rooms
     Room northConnection = null;
     Room southConnection = null;
     Room eastConnection = null;
     Room westConnection = null;
+
+    Room()
+    {
+    }
 
     Room(String n, int loc)
     {
@@ -104,6 +110,16 @@ public class Room
         this.externalDesc = externalDesc;
     }
 
+    public String getLeaveCond()
+    {
+        return leaveCond;
+    }
+
+    public void setLeaveCond(String leaveCond)
+    {
+        this.leaveCond = leaveCond;
+    }
+
     public String getName()
     {
         return name;
@@ -141,9 +157,9 @@ public class Room
     {
         String text = null;
         Scanner search = new Scanner(ROOMDESCRIPTIONS);
-        while(search.hasNext())
+        while (search.hasNext())
         {
-            
+
         }
         search.close();
         return text;
@@ -200,20 +216,31 @@ public class Room
         itemList.add(item);
     }
 
+    public ArrayList<Item> getItemList()
+    {
+        return itemList;
+    }
+
+    public void setItemList(ArrayList<Item> itemList)
+    {
+        this.itemList = itemList;
+    }
+
     public String getItems()
     {
-		String visibleItems = "";
-		for(int i = 0; i < itemList.size(); i++)
-		{
-            
-			if(itemList.get(i).getVisibility())
-			{
-				visibleItems = visibleItems + "\n" + itemList.get(i);
-			}
-		}
+        String visibleItems = "";
+        for (int i = 0; i < itemList.size(); i++)
+        {
+
+            if (itemList.get(i).getVisibility())
+            {
+                visibleItems = visibleItems + "\n" + itemList.get(i);
+            }
+        }
         //for loop printing item list
-		return visibleItems;
+        return visibleItems;
     }
+
     public FileInputStream getFile()
     {
         try
@@ -225,5 +252,30 @@ public class Room
             System.out.println("Room descriptions not found");
             return null;
         }
+    }
+
+    public boolean isLeavable()
+    {
+        return leavable;
+    }
+    public void setLeavable(boolean flag)
+    {
+        leavable = flag;
+    }
+    //Override this in all subclasses
+    public void metLeaveCond(Player player)
+    {
+    }
+
+    //Override this in all subclasses
+    public int doRiddle()
+    {
+        return 1;
+    }
+
+    //Override this in all subclasses
+    public String getLeaveCondition()
+    {
+        return null;
     }
 }
