@@ -11,10 +11,9 @@ import java.util.ArrayList;
  */
 abstract public class Room
 {
-
-    //Gets file and handles possible exception
-    final FileInputStream ROOMDESCRIPTIONS = getFile();
-    //file variable for containing descriptions
+//    file variable for containing descriptions
+//    Gets file and handles possible exception. Do this in third sprint
+//    final FileInputStream ROOMDESCRIPTIONS = getFile();
 
     private ArrayList<Item> itemList = new ArrayList<>();
     //Name of this room
@@ -40,52 +39,51 @@ abstract public class Room
     {
     }
 
-    Room(String n, int loc)
+    Room(String n, String intro)
     {
         setName(n);
-        setIntro(searchFile(loc));
+        setIntro(intro);
 
     }
 
-    Room(String n, int descLoc, Room connectedRoom)
-    {
-        setName(n);
-        setIntro(searchFile(descLoc));
-        //set connected rooms in each required direction
-        setConnection(1, connectedRoom);
-    }
-
-    Room(String n, int loc, Room conRoom1, Room conRoom2)
-    {
-        setName(n);
-        setIntro(searchFile(loc));
-        //set connected rooms in each required direction
-        setConnection(1, conRoom1);
-        setConnection(2, conRoom2);
-    }
-
-    Room(String n, int loc, Room conRoom1, Room conRoom2, Room conRoom3)
-    {
-        setName(n);
-        setIntro(searchFile(loc));
-        //set connected rooms in each required direction
-        setConnection(1, conRoom1);
-        setConnection(2, conRoom2);
-        setConnection(3, conRoom3);
-    }
-
-    Room(String n, int loc, Room conRoom1, Room conRoom2, Room conRoom3, Room conRoom4)
-    {
-        setName(n);
-        setIntro(searchFile(loc));
-        //set connected rooms in each required direction
-        setConnection(1, conRoom1);
-        setConnection(2, conRoom2);
-        setConnection(3, conRoom3);
-        setConnection(4, conRoom4);
-    }
-
-    private void setName(String name)
+//    Room(String n, int descLoc, Room connectedRoom)
+//    {
+//        setName(n);
+//        setIntro(searchFile(descLoc));
+//        //set connected rooms in each required direction
+//        setConnection(1, connectedRoom);
+//    }
+//
+//    Room(String n, int loc, Room conRoom1, Room conRoom2)
+//    {
+//        setName(n);
+//        setIntro(searchFile(loc));
+//        //set connected rooms in each required direction
+//        setConnection(1, conRoom1);
+//        setConnection(2, conRoom2);
+//    }
+//
+//    Room(String n, int loc, Room conRoom1, Room conRoom2, Room conRoom3)
+//    {
+//        setName(n);
+//        setIntro(searchFile(loc));
+//        //set connected rooms in each required direction
+//        setConnection(1, conRoom1);
+//        setConnection(2, conRoom2);
+//        setConnection(3, conRoom3);
+//    }
+//
+//    Room(String n, int loc, Room conRoom1, Room conRoom2, Room conRoom3, Room conRoom4)
+//    {
+//        setName(n);
+//        setIntro(searchFile(loc));
+//        //set connected rooms in each required direction
+//        setConnection(1, conRoom1);
+//        setConnection(2, conRoom2);
+//        setConnection(3, conRoom3);
+//        setConnection(4, conRoom4);
+//    }
+    public void setName(String name)
     {
         this.name = name;
     }
@@ -95,7 +93,7 @@ abstract public class Room
         return this.intro;
     }
 
-    private void setIntro(String intro)
+    public void setIntro(String intro)
     {
         this.intro = intro;
     }
@@ -139,6 +137,10 @@ abstract public class Room
     {
         return true;
     }
+    public void removeItem(int index)
+    {
+        itemList.remove(index);
+    }
 
     public boolean getRoomDesc()
     {
@@ -153,20 +155,19 @@ abstract public class Room
     }
     //unfinished method below searches files
 
-    private String searchFile(int descLocator)
-    {
-        String text = null;
-        Scanner search = new Scanner(ROOMDESCRIPTIONS);
-        while (search.hasNext())
-        {
-
-        }
-        search.close();
-        return text;
-    }
+//    private String searchFile(int descLocator)
+//    {
+//        String text = null;
+//       Scanner search = new Scanner(ROOMDESCRIPTIONS);
+//        while (search.hasNext())
+//        {
+//
+//        }
+//        search.close();
+//        return text;
+//    }
     //setter method for connections
-
-    private void setConnection(int dir, Room connectedRoom)
+    public void setConnection(int dir, Room connectedRoom)
     {
         switch (dir)
         {
@@ -258,19 +259,21 @@ abstract public class Room
     {
         return leavable;
     }
+
     public void setLeavable(boolean flag)
     {
         leavable = flag;
     }
+
     //Override this in all subclasses
     public void metLeaveCond(Player player)
     {
     }
 
     //Override this in all subclasses
-    public int doRiddle()
+    public void doRiddle(Player player)
     {
-        return 1;
+
     }
 
     //Override this in all subclasses
