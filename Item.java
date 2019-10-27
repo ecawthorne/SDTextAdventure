@@ -13,6 +13,7 @@ public class Item
     private String name = null;
     //Description of item
     private String desc = null;
+    //Work on this in future sprint
     private boolean isVisible = false;
 
     public Item(String name, String desc)

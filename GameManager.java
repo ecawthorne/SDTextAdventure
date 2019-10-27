@@ -7,24 +7,42 @@ import java.util.Scanner;
  */
 public class GameManager
 {
-    //room player is currently in
 
+    //The room the player is currently in. Player starts in his house which is InitialRoom
     private Room currentRoom = null;
     String input = null;
+    //Probably redundant. Check and remove if it is
     private boolean gameOver = false;
+    //Player Object. Name, player inventory, and player status stored here
     Player player = new Player();
+    //Duplicated from SamuraiStrike.java. Probably a better way to do this.
+    final String HELPMESSAGE = "You can use the following commands: "
+            + "\'n\' will head north, when possible. \n"
+            + "\'s\' will head south, when possible. \n"
+            + "\'e\' will head east, when possible. \n"
+            + "\'w\' will head west, when possible. \n"
+            + "\'u\' will head up, when possible. \n"
+            + "\'d\' will head down, when possible. \n"
+            + "\'take <item>\' will allow you to pick up items in the room\n"
+            + "\'l\' will look, providing a description of the room. \n"
+            + "\'q\' will quit the game. \n";
 
+    //No arguements passed when creating GameManager. Creates the currently implemented map
     GameManager()
     {
         constructRooms();
     }
 
+    //Description of then room given to the player when he first enters
+    //Consider changing so that intro only prints on first entrance while others print everytime
     public void EnterRoom()
     {
         System.out.println(currentRoom.getIntro());
         System.out.println("The following items are in this room: ");
+        //Iterates through the items in the rooms, printing each elements name
         currentRoom.getItemList().forEach((n) -> System.out.println(n.getName()));
-
+        //Checks if the current room has exits in each direction, if it does,
+        //print the room name in that direction
         for (int i = 1; i <= 4; i++)
         {
             String direction;
@@ -56,6 +74,7 @@ public class GameManager
         System.out.println("\n");
     }
 
+    //Posssibly redundant again
     public boolean isGameOver()
     {
         return gameOver;
@@ -66,6 +85,7 @@ public class GameManager
         this.gameOver = gameOver;
     }
 
+    //Remove this when possible. Probably unneeded
     public void getInput()
     {
         Scanner playerInput = new Scanner(System.in);
@@ -77,6 +97,7 @@ public class GameManager
     //and performs actions depending on entered values
     public void parseInput(String input)
     {
+        //Improve this in future sprints
         //Research possible better ways to parse the players input
         if (input.isEmpty())
         {
@@ -108,6 +129,7 @@ public class GameManager
                     case 'l':
                         look();
                         break;
+                    //Prints the players inventory
                     case 'i':
                         if (!player.getItemList().isEmpty())
                         {
@@ -125,15 +147,19 @@ public class GameManager
                         break;
                     case 'h':
                         getHelp();
+                        break;
                     case 'q':
                         quitGame();
                         break;
                     default:
                         break;
                 }
+                //Splits the users input into an array with the second element being
+                //the item the user attempts to take
             } else if (input.toLowerCase().split(" ")[0].equals("take"))//This will probably cause errors in some cases
             {
                 //Move this into a method at some point and fix likely error
+                //Research hiding or storing items in other items
                 String[] inputArray = input.toLowerCase().split(" ");
                 for (int i = 0; i < currentRoom.getItemList().size(); i++)
                 {
@@ -146,9 +172,12 @@ public class GameManager
                         break; //Maybe find a better way to do this
                     }
                 }
+                //Implement in future sprint
             } else if (input.toLowerCase().split(" ")[0].equals("open"))//This will probably cause errors in some cases
             {
-                
+                //Make certain items openable using ItemContainer
+            } else if (input.toLowerCase().split(" ")[0].equals("examine"))
+            {
             } else
             {
                 System.out.println("I don't understand that. Try again");
@@ -161,15 +190,28 @@ public class GameManager
         System.out.println(currentRoom.getRoomDesc());
         System.out.println(currentRoom.getItems());
     }
-
-    public void examine(/**/)
+    //Examines the desired item regardless of whether it's in the room or the 
+    //players inventory
+    public void examine(String toExamine)
     {
-        System.out.println(/*Item description*/);
+        for (int i = 0; i < currentRoom.getItemList().size(); i++)
+        {
+            if (currentRoom.getItemList().get(i).getName().equals(toExamine))
+            //These calls are killing me inside. Change this at some point to look nicer
+            {
+                System.out.println(currentRoom.getItemList().get(i).getDesc());
+            } else if (player.getItemList().get(i).getName().equals(toExamine))
+            //These calls are killing me inside. Change this at some point to look nicer
+            {
+                System.out.println(player.getItemList().get(i).getDesc());
+            }
+        }
+
     }
 
     public void getHelp()
     {
-        System.out.println("Helpful info");
+        System.out.println(HELPMESSAGE);
     }
 
     public Room getCurrentRoom()
@@ -182,7 +224,9 @@ public class GameManager
         this.currentRoom = currentRoom;
         EnterRoom();
     }
-
+    //Most rooms will have a condition that needs to be met in order to leave it
+    //this checks if the condition has been met and allows the player to move it
+    //it has
     public void movePlayer(int direction)
     {
         Room toMove = currentRoom.getConnection(direction);
@@ -214,8 +258,8 @@ public class GameManager
         //example of adding items below, to be moved to another method or class
         village.addItem(new Item("foo", "jar"));
     }
-
-    //Possibly redundant
+    //Likely what we want to use going forward
+    //Consider adding different game over messages
     private void quitGame()
     {
         player.setAlive(false);
@@ -225,7 +269,7 @@ public class GameManager
     {
         return player.isAlive();
     }
-
+    //Probably going to remove this soon
     public boolean doAction(String parsedInput)
     {
         boolean done = false;

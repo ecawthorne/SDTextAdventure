@@ -241,7 +241,7 @@ abstract public class Room
         //for loop printing item list
         return visibleItems;
     }
-
+    //Research this. XML tags a possiblility for descriptions and loger strings
     public FileInputStream getFile()
     {
         try
@@ -266,11 +266,13 @@ abstract public class Room
     }
 
     //Override this in all subclasses
+    //Condition for leaving the room
     public void metLeaveCond(Player player)
     {
     }
 
     //Override this in all subclasses
+    //Riddles to open locks, leave rooms, get items, etc.
     public void doRiddle(Player player)
     {
 

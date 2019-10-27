@@ -5,6 +5,7 @@ import java.util.ArrayList;
  *
  * @author Eric
  */
+//Expand this in future sprint Chests, wardrobes, etc
 public class ItemContainer
 {
 

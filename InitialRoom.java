@@ -19,7 +19,8 @@ class InitialRoom extends Room
             + "\"Bubbles, where are you!?”. The dog doesn’t respond and is \n"
             + "nowhere to be seen. He sits up and hears ogres making crying\n"
             + "out for war. “Nobody messes with my dog!”";
-
+    //Sets up room descriptionsm adds item that will be in the room to
+    //the rooms inventory
     InitialRoom()
     {
         setName("Your house");
