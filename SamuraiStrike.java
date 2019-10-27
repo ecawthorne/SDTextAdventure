@@ -13,8 +13,7 @@ public class SamuraiStrike
     //GAMEINTRO is printed once, at the beginning of the game
     final static String GAMEINTRO = "Welcome to the Software Samurai text-based game, Samurai Strike " + VERSIONNUMBER + "! \n "
             + "Thanks for playing! \n "
-            + "\n Type 'h' for help menu."
-            + "";
+            + "Type 'h' for help menu.\n";
     //HELPMESSAGE is printed whenever player types 'h', to explain commands to them.
     final String HELPMESSAGE = "You can use the following commands: "
             + "\'n\' will head north, when possible. \n"
@@ -23,7 +22,7 @@ public class SamuraiStrike
             + "\'w\' will head west, when possible. \n"
             + "\'u\' will head up, when possible. \n"
             + "\'d\' will head down, when possible. \n"
-            + "\'take <item>\' will allow you to pick up items in the room"
+            + "\'take <item>\' will allow you to pick up items in the room\n"
             + "\'l\' will look, providing a description of the room. \n"
             + "\'q\' will quit the game. \n"
             + "";

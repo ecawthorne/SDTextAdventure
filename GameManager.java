@@ -24,7 +24,7 @@ public class GameManager
         System.out.println(currentRoom.getIntro());
         System.out.println("The following items are in this room: ");
         currentRoom.getItemList().forEach((n) -> System.out.println(n.getName()));
-        
+
         for (int i = 1; i <= 4; i++)
         {
             String direction;
@@ -78,7 +78,10 @@ public class GameManager
     public void parseInput(String input)
     {
         //Research possible better ways to parse the players input
-        if (!input.isEmpty())
+        if (input.isEmpty())
+        {
+            System.out.println("Enter a command or type \'h\' for help");
+        } else
         {
             if (input.length() == 1)
             {
@@ -108,15 +111,17 @@ public class GameManager
                     case 'i':
                         if (!player.getItemList().isEmpty())
                         {
-                            for(int i = 0; i < player.getItemList().size(); i++)
+                            for (int i = 0; i < player.getItemList().size(); i++)
                             {
-                                if(player.getItemList().get(i).getVisibility())
+                                if (player.getItemList().get(i).getVisibility())
                                 {
                                     System.out.println(player.getItemList().get(i).getName());
                                 }
                             }
-                        }else
+                        } else
+                        {
                             System.out.println("You dont have any items!");
+                        }
                         break;
                     case 'h':
                         getHelp();
@@ -126,7 +131,7 @@ public class GameManager
                     default:
                         break;
                 }
-            } else if (input.toLowerCase().split(" ")[0].equals("take"))//This will cause errors in some cases
+            } else if (input.toLowerCase().split(" ")[0].equals("take"))//This will probably cause errors in some cases
             {
                 //Move this into a method at some point and fix likely error
                 String[] inputArray = input.toLowerCase().split(" ");
@@ -134,21 +139,20 @@ public class GameManager
                 {
                     if (currentRoom.getItemList().get(i).getName().toLowerCase().equals(inputArray[1]))
                     {
-                        //This probably won't work but check just in case i.e. reference vs. copy
                         player.addItem(currentRoom.getItemList().get(i));
                         //Overload getItemList in future
                         System.out.println("You got the " + currentRoom.getItemList().get(i).getName());
                         currentRoom.removeItem(i);
-                        break;//Maybe find a better way to do this
+                        break; //Maybe find a better way to do this
                     }
                 }
+            } else if (input.toLowerCase().split(" ")[0].equals("open"))//This will probably cause errors in some cases
+            {
+                
             } else
             {
                 System.out.println("I don't understand that. Try again");
             }
-        } else
-        {
-            System.out.println("Enter a command or type \'h\' for help");
         }
     }
 
@@ -182,6 +186,7 @@ public class GameManager
     public void movePlayer(int direction)
     {
         Room toMove = currentRoom.getConnection(direction);
+        currentRoom.metLeaveCond(player);
         if (!currentRoom.isLeavable())
         {
             System.out.println(currentRoom.getLeaveCondition());

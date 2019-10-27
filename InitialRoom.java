@@ -22,7 +22,7 @@ class InitialRoom extends Room
 
     InitialRoom()
     {
-        setName("House");
+        setName("Your house");
         setIntro(this.intro);
         setInternalDesc("There are haystacks up in flames on his right. "
                 + "To his left is his wardrobe, and in front of him is a"
