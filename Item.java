@@ -13,6 +13,7 @@ public class Item
     private String name = null;
     //Description of item
     private String desc = null;
+    //Work on this in future sprint
     private boolean isVisible = false;
 
     public Item(String name, String desc)
@@ -20,13 +21,14 @@ public class Item
         this.name = name;
         this.desc = desc;
     }
+
     public Item(String name, String desc, boolean isVisible)
     {
         this.name = name;
         this.desc = desc;
         this.isVisible = isVisible;
     }
-    
+
     public void setName(String name)
     {
         this.name = name;
@@ -46,15 +48,15 @@ public class Item
     {
         return desc;
     }
-	
-	public void setVisibility(boolean isVisible)
-	{
-		this.isVisible = isVisible;
-	}
-	
-	public boolean getVisibility()
-	{
-		return isVisible;
-	}
+
+    public void setVisibility(boolean isVisible)
+    {
+        this.isVisible = isVisible;
+    }
+
+    public boolean getVisibility()
+    {
+        return isVisible;
+    }
 
 }

@@ -1,17 +1,16 @@
 
+import java.util.ArrayList;
+
 /**
  *
- * @author Eric
- * edited by Chase 10/22/2019
- * edited by Chase 10/23/2019
+ * @author Eric edited by Chase 10/22/2019 edited by Chase 10/23/2019
  */
 public class Player
 {
 
-
     //Player name
     private String name = null;
-
+    private ArrayList<Item> itemList = new ArrayList<>();
     private boolean alive = true;
     private Room currentRoom = null;
 
@@ -41,7 +40,21 @@ public class Player
         this.alive = alive;
     }
 
+    public void addItem(Item item)
+    {
+        itemList.add(item);
+    }
 
+    public ArrayList<Item> getItemList()
+    {
+        return itemList;
+    }
+
+    public void setItemList(ArrayList<Item> itemList)
+    {
+        this.itemList = itemList;
+    }
+    //Double check but most likely remove this
     public boolean doAction(String parsedInput)
     {
         boolean done = false;
@@ -59,13 +72,13 @@ public class Player
             case 'l':
                 done = currentRoom.getRoomDesc(); //future update will check if 'l' is followed by anything, and then provide a description of whatever is being looked at
                 break;
-        //implement quit functionality
+            //implement quit functionality
             case 'q':
-				setAlive(false);
+                setAlive(false);
                 break;
-        //implement help function
+            //implement help function
             case 'h':
-				//displayHelpMessage;
+                //displayHelpMessage;
                 break;
             default:
                 break;
