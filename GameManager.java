@@ -16,13 +16,14 @@ public class GameManager
     //Player Object. Name, player inventory, and player status stored here
     Player player = new Player();
     //Duplicated from SamuraiStrike.java. Probably a better way to do this.
-    final String HELPMESSAGE = "You can use the following commands: "
+    final String HELPMESSAGE = "You can use the following commands: \n"
             + "\'n\' will head north, when possible. \n"
             + "\'s\' will head south, when possible. \n"
             + "\'e\' will head east, when possible. \n"
             + "\'w\' will head west, when possible. \n"
             + "\'u\' will head up, when possible. \n"
             + "\'d\' will head down, when possible. \n"
+            + "\'examine <item>\' will will give a description of the item\n"
             + "\'take <item>\' will allow you to pick up items in the room\n"
             + "\'l\' will look, providing a description of the room. \n"
             + "\'q\' will quit the game. \n";
@@ -178,6 +179,14 @@ public class GameManager
                 //Make certain items openable using ItemContainer
             } else if (input.toLowerCase().split(" ")[0].equals("examine"))
             {
+                String[] inputArray = input.toLowerCase().split(" ");
+                for (int i = 0; i < currentRoom.getItemList().size(); i++)
+                {
+                    if(currentRoom.getItemList().get(i).getName().toLowerCase().equals(inputArray[1]))
+                    {
+                        System.out.println(currentRoom.getItemList().get(i).getDesc());
+                    }
+                }
             } else
             {
                 System.out.println("I don't understand that. Try again");
@@ -187,8 +196,13 @@ public class GameManager
 
     public void look()
     {
-        System.out.println(currentRoom.getRoomDesc());
-        System.out.println(currentRoom.getItems());
+        
+        System.out.println(currentRoom.getInternalDesc());
+        System.out.println("You can see these items in the room:");
+        for(int i = 0; i < currentRoom.getItemList().size(); i++)
+        {
+            System.out.println(currentRoom.getItemList().get(i).getName());
+        }
     }
     //Examines the desired item regardless of whether it's in the room or the 
     //players inventory
