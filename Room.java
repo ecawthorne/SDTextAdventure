@@ -2,19 +2,17 @@
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 import java.util.ArrayList;
 
 /**
  *
  * @author Eric
  */
-public class Room
+abstract public class Room
 {
-    
-    //Gets file and handles possible exception
-    final FileInputStream ROOMDESCRIPTIONS = getFile();
-    //file variable for containing descriptions
+//    file variable for containing descriptions
+//    Gets file and handles possible exception. Do this in third sprint
+//    final FileInputStream ROOMDESCRIPTIONS = getFile();
 
     private ArrayList<Item> itemList = new ArrayList<>();
     //Name of this room
@@ -26,7 +24,11 @@ public class Room
     //Description of the room as seen form adjacent rooms
     private String externalDesc = null;
     //Keep the player in a room until a condition is met
-    //private boolean canLeave = false;
+    private boolean leavable = true;
+    //Instructions or hints for leaving the room
+    private String leaveCond = null;
+    //determine whether or not to print the intro based on if the player has been in the room before
+    private boolean enteredBefore = false;
 
     //direction variables for next rooms
     Room northConnection = null;
@@ -34,52 +36,18 @@ public class Room
     Room eastConnection = null;
     Room westConnection = null;
 
-    Room(String n, int loc)
+    Room()
     {
-        setName(n);
-        setIntro(searchFile(loc));
-
+        this("a generic room", "The room is generic.");
     }
 
-    Room(String n, int descLoc, Room connectedRoom)
+    Room(String n, String intro)
     {
         setName(n);
-        setIntro(searchFile(descLoc));
-        //set connected rooms in each required direction
-        setConnection(1, connectedRoom);
+        setIntro(intro);
     }
 
-    Room(String n, int loc, Room conRoom1, Room conRoom2)
-    {
-        setName(n);
-        setIntro(searchFile(loc));
-        //set connected rooms in each required direction
-        setConnection(1, conRoom1);
-        setConnection(2, conRoom2);
-    }
-
-    Room(String n, int loc, Room conRoom1, Room conRoom2, Room conRoom3)
-    {
-        setName(n);
-        setIntro(searchFile(loc));
-        //set connected rooms in each required direction
-        setConnection(1, conRoom1);
-        setConnection(2, conRoom2);
-        setConnection(3, conRoom3);
-    }
-
-    Room(String n, int loc, Room conRoom1, Room conRoom2, Room conRoom3, Room conRoom4)
-    {
-        setName(n);
-        setIntro(searchFile(loc));
-        //set connected rooms in each required direction
-        setConnection(1, conRoom1);
-        setConnection(2, conRoom2);
-        setConnection(3, conRoom3);
-        setConnection(4, conRoom4);
-    }
-
-    private void setName(String name)
+    public void setName(String name)
     {
         this.name = name;
     }
@@ -89,7 +57,7 @@ public class Room
         return this.intro;
     }
 
-    private void setIntro(String intro)
+    public void setIntro(String intro)
     {
         this.intro = intro;
     }
@@ -102,6 +70,16 @@ public class Room
     public void setExternalDesc(String externalDesc)
     {
         this.externalDesc = externalDesc;
+    }
+
+    public String getLeaveCond()
+    {
+        return leaveCond;
+    }
+
+    public void setLeaveCond(String leaveCond)
+    {
+        this.leaveCond = leaveCond;
     }
 
     public String getName()
@@ -123,6 +101,7 @@ public class Room
     {
         return true;
     }
+   
 
     public boolean getRoomDesc()
     {
@@ -137,20 +116,19 @@ public class Room
     }
     //unfinished method below searches files
 
-    private String searchFile(int descLocator)
-    {
-        String text = null;
-        Scanner search = new Scanner(ROOMDESCRIPTIONS);
-        while(search.hasNext())
-        {
-            
-        }
-        search.close();
-        return text;
-    }
+//    private String searchFile(int descLocator)
+//    {
+//        String text = null;
+//       Scanner search = new Scanner(ROOMDESCRIPTIONS);
+//        while (search.hasNext())
+//        {
+//
+//        }
+//        search.close();
+//        return text;
+//    }
     //setter method for connections
-
-    private void setConnection(int dir, Room connectedRoom)
+    public void setConnection(int dir, Room connectedRoom)
     {
         switch (dir)
         {
@@ -199,21 +177,70 @@ public class Room
     {
         itemList.add(item);
     }
+    
+    public void addItem(ItemContainer item)
+    {
+        itemList.add(item);
+    }
+    
+    public void removeItem(int index)
+    {
+        itemList.remove(index);
+    }
+    
+    public void removeItem(Item item)
+    {
+        itemList.remove(item);
+    }
+    public ArrayList<Item> getItemList()
+    {
+        return itemList;
+    }
+
+    public void setItemList(ArrayList<Item> itemList)
+    {
+        this.itemList = itemList;
+    }
+
+    public void printItems()
+    {
+        System.out.println(getItems());
+    }
 
     public String getItems()
     {
-		String visibleItems = "";
-		for(int i = 0; i < itemList.size(); i++)
-		{
-            
-			if(itemList.get(i).getVisibility())
-			{
-				visibleItems = visibleItems + "\n" + itemList.get(i);
-			}
-		}
+        String visibleItems = "";
+        for (int i = 0; i < itemList.size(); i++)
+        {
+
+            if (itemList.get(i).getVisibility())
+            {
+                visibleItems += "\n -" + itemList.get(i).getName();
+                //check to see if the object in the item list is a container
+                if(itemList.get(i).getContainerStatus())
+                {
+                    //if it is an item list, this below method will run
+                    ArrayList<Item> containerList = ((ItemContainer) itemList.get(i)).getItemList();
+                    //add each item inside the container to the visible list, if it isn't invisible for some reason
+                    if(containerList != null)
+                    {
+                        for(int j = 0; j < containerList.size(); j++)
+                        {
+                            if(containerList.get(j).getVisibility())
+                            {
+                                visibleItems += "\n" + containerList.get(j).getName();
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        }
+        visibleItems += "\n";
         //for loop printing item list
-		return visibleItems;
+        return visibleItems;
     }
+    //Research this. XML tags a possiblility for descriptions and loger strings
     public FileInputStream getFile()
     {
         try
@@ -225,5 +252,44 @@ public class Room
             System.out.println("Room descriptions not found");
             return null;
         }
+    }
+
+    public boolean isLeavable()
+    {
+        return leavable;
+    }
+
+    public void setLeavable(boolean flag)
+    {
+        leavable = flag;
+    }
+
+    //Override this in all subclasses
+    //Condition for leaving the room
+    public void metLeaveCond(Player player)
+    {
+    }
+
+    //Override this in all subclasses
+    //Riddles to open locks, leave rooms, get items, etc.
+    public void doRiddle(Player player)
+    {
+
+    }
+
+    //Override this in all subclasses
+    public String getLeaveCondition()
+    {
+        return null;
+    }
+
+    //return the enteredBefore variable
+    public boolean getEntered()
+    {
+        return enteredBefore;
+    }
+    public void setEntered(boolean enteredStatus)
+    {
+        enteredBefore = enteredStatus;
     }
 }
