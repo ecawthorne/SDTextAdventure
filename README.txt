@@ -2,6 +2,11 @@
 README AND CHANGELOG
 ====================
 Edited by Chase for v0.2 on 10/29/2019 at 23:08
+===============
+PROGRAM SUMMARY
+===============
+Text-based adventure game for CSCI 3315. Current name: Samurai Strike.
+The player will solve puzzles and riddles in order to advance further throughout the world of Samurai Strike, encountering enemies and finding love along the way!
 ==================
 SamuraiStrike v0.1
 ==================
