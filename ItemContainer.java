@@ -54,7 +54,6 @@ public class ItemContainer extends Item
     {
 
     }
-
     @Override
     public void open(Room room)
     {
@@ -76,5 +75,4 @@ public class ItemContainer extends Item
             System.out.println("It's empty!");
         }
     }
-
 }

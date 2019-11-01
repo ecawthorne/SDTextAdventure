@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class GameManager
 {
     Scanner keyboard = new Scanner(System.in);
-
     //The room the player is currently in. Player starts in his house which is InitialRoom
     private Room currentRoom = null;
     String input = null;
@@ -113,6 +112,7 @@ public class GameManager
             return toReturn;
         }
 
+
     }
 
     //Posssibly redundant again
@@ -125,7 +125,6 @@ public class GameManager
     {
         this.gameOver = gameOver;
     }
-
     //Checks that  the input is valid
     //and performs actions depending on entered values
     public void parseInput(String input)
@@ -309,7 +308,6 @@ public class GameManager
 
         return fixedArray;
     }
-
     public void openItem(String toOpen)
     {
         //find and open an object if it's openable

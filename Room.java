@@ -38,6 +38,7 @@ abstract public class Room
 
     Room()
     {
+
         this("a generic room", "The room is generic.");
     }
 
@@ -45,8 +46,7 @@ abstract public class Room
     {
         setName(n);
         setIntro(intro);
-    }
-
+      
     public void setName(String name)
     {
         this.name = name;
@@ -101,7 +101,6 @@ abstract public class Room
     {
         return true;
     }
-   
 
     public boolean getRoomDesc()
     {
@@ -205,6 +204,16 @@ abstract public class Room
     public void printItems()
     {
         System.out.println(getItems());
+    }
+
+    public ArrayList<Item> getItemList()
+    {
+        return itemList;
+    }
+
+    public void setItemList(ArrayList<Item> itemList)
+    {
+        this.itemList = itemList;
     }
 
     public String getItems()
