@@ -14,8 +14,15 @@ public class Item
     //Description of item
     private String desc = null;
     //Work on this in future sprint
-    private boolean isVisible = false;
+    //I set default visibility to true because it's easy to forget they are invisible by default, causing debugging difficulties until the object instantiation is finally found and the lack of an isVisible declaration is noticed. Can change this later.
+    private boolean isVisible = true;
+    //going to add this canCarry boolean for future work, will have to be updated to include this eventually
+    //private boolean canCarry = false;
+    private boolean isContainer = false;
+    public Item()
+    {
 
+    }
     public Item(String name, String desc)
     {
         this.name = name;
@@ -57,6 +64,21 @@ public class Item
     public boolean getVisibility()
     {
         return isVisible;
+    }
+
+    public boolean getContainerStatus()
+    {
+        return isContainer;
+    }
+
+    public void setContainerStatus(boolean containerStatus)
+    {
+        isContainer = containerStatus;
+    }
+
+    public void open(Room room)
+    {
+        System.out.println("That object can't be opened!");
     }
 
 }

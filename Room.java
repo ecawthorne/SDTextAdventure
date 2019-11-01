@@ -2,7 +2,6 @@
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 import java.util.ArrayList;
 
 /**
@@ -25,9 +24,11 @@ abstract public class Room
     //Description of the room as seen form adjacent rooms
     private String externalDesc = null;
     //Keep the player in a room until a condition is met
-    private boolean leavable = false;
+    private boolean leavable = true;
     //Instructions or hints for leaving the room
     private String leaveCond = null;
+    //determine whether or not to print the intro based on if the player has been in the room before
+    private boolean enteredBefore = false;
 
     //direction variables for next rooms
     Room northConnection = null;
@@ -37,52 +38,15 @@ abstract public class Room
 
     Room()
     {
+
+        this("a generic room", "The room is generic.");
     }
 
     Room(String n, String intro)
     {
         setName(n);
         setIntro(intro);
-
-    }
-
-//    Room(String n, int descLoc, Room connectedRoom)
-//    {
-//        setName(n);
-//        setIntro(searchFile(descLoc));
-//        //set connected rooms in each required direction
-//        setConnection(1, connectedRoom);
-//    }
-//
-//    Room(String n, int loc, Room conRoom1, Room conRoom2)
-//    {
-//        setName(n);
-//        setIntro(searchFile(loc));
-//        //set connected rooms in each required direction
-//        setConnection(1, conRoom1);
-//        setConnection(2, conRoom2);
-//    }
-//
-//    Room(String n, int loc, Room conRoom1, Room conRoom2, Room conRoom3)
-//    {
-//        setName(n);
-//        setIntro(searchFile(loc));
-//        //set connected rooms in each required direction
-//        setConnection(1, conRoom1);
-//        setConnection(2, conRoom2);
-//        setConnection(3, conRoom3);
-//    }
-//
-//    Room(String n, int loc, Room conRoom1, Room conRoom2, Room conRoom3, Room conRoom4)
-//    {
-//        setName(n);
-//        setIntro(searchFile(loc));
-//        //set connected rooms in each required direction
-//        setConnection(1, conRoom1);
-//        setConnection(2, conRoom2);
-//        setConnection(3, conRoom3);
-//        setConnection(4, conRoom4);
-//    }
+      
     public void setName(String name)
     {
         this.name = name;
@@ -136,10 +100,6 @@ abstract public class Room
     boolean changeRoom(String direction)
     {
         return true;
-    }
-    public void removeItem(int index)
-    {
-        itemList.remove(index);
     }
 
     public boolean getRoomDesc()
@@ -216,6 +176,35 @@ abstract public class Room
     {
         itemList.add(item);
     }
+    
+    public void addItem(ItemContainer item)
+    {
+        itemList.add(item);
+    }
+    
+    public void removeItem(int index)
+    {
+        itemList.remove(index);
+    }
+    
+    public void removeItem(Item item)
+    {
+        itemList.remove(item);
+    }
+    public ArrayList<Item> getItemList()
+    {
+        return itemList;
+    }
+
+    public void setItemList(ArrayList<Item> itemList)
+    {
+        this.itemList = itemList;
+    }
+
+    public void printItems()
+    {
+        System.out.println(getItems());
+    }
 
     public ArrayList<Item> getItemList()
     {
@@ -235,9 +224,28 @@ abstract public class Room
 
             if (itemList.get(i).getVisibility())
             {
-                visibleItems = visibleItems + "\n" + itemList.get(i);
+                visibleItems += "\n -" + itemList.get(i).getName();
+                //check to see if the object in the item list is a container
+                if(itemList.get(i).getContainerStatus())
+                {
+                    //if it is an item list, this below method will run
+                    ArrayList<Item> containerList = ((ItemContainer) itemList.get(i)).getItemList();
+                    //add each item inside the container to the visible list, if it isn't invisible for some reason
+                    if(containerList != null)
+                    {
+                        for(int j = 0; j < containerList.size(); j++)
+                        {
+                            if(containerList.get(j).getVisibility())
+                            {
+                                visibleItems += "\n" + containerList.get(j).getName();
+                            }
+                        }
+                    }
+                    
+                }
             }
         }
+        visibleItems += "\n";
         //for loop printing item list
         return visibleItems;
     }
@@ -282,5 +290,15 @@ abstract public class Room
     public String getLeaveCondition()
     {
         return null;
+    }
+
+    //return the enteredBefore variable
+    public boolean getEntered()
+    {
+        return enteredBefore;
+    }
+    public void setEntered(boolean enteredStatus)
+    {
+        enteredBefore = enteredStatus;
     }
 }

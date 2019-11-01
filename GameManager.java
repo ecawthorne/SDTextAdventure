@@ -1,4 +1,5 @@
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Scanner;
  */
 public class GameManager
 {
-
+    Scanner keyboard = new Scanner(System.in);
     //The room the player is currently in. Player starts in his house which is InitialRoom
     private Room currentRoom = null;
     String input = null;
@@ -17,15 +18,14 @@ public class GameManager
     Player player = new Player();
     //Duplicated from SamuraiStrike.java. Probably a better way to do this.
     final String HELPMESSAGE = "You can use the following commands: "
-            + "\'n\' will head north, when possible. \n"
-            + "\'s\' will head south, when possible. \n"
-            + "\'e\' will head east, when possible. \n"
-            + "\'w\' will head west, when possible. \n"
-            + "\'u\' will head up, when possible. \n"
-            + "\'d\' will head down, when possible. \n"
-            + "\'take <item>\' will allow you to pick up items in the room\n"
-            + "\'l\' will look, providing a description of the room. \n"
-            + "\'q\' will quit the game. \n";
+            + "-\'go\' will go in the cardinal direction you enter\n"
+            + "-\'take <item>\' will allow you to pick up items in the room\n"
+            + "-\'drop <item\' will remove an item from your inventory."
+            + "-\'i\' will display your inventory."
+            + "-\'open <item>\' will allow you to open a container.\n"
+            + "-\'examine <item>\' will provide more detail about an item."
+            + "-\'l\' will look, providing a description of the room. \n"
+            + "-\'q\' will quit the game. \n";
 
     //No arguements passed when creating GameManager. Creates the currently implemented map
     GameManager()
@@ -37,10 +37,15 @@ public class GameManager
     //Consider changing so that intro only prints on first entrance while others print everytime
     public void EnterRoom()
     {
-        System.out.println(currentRoom.getIntro());
-        System.out.println("The following items are in this room: ");
+        System.out.println("You have entered " + currentRoom.getName() + "\n");
+        if(!currentRoom.getEntered())
+        {            
+            System.out.println(currentRoom.getIntro() + "\n"); //returns null for rooms besides initial room because we don't set it.
+            currentRoom.setEntered(true);
+        }
+        System.out.print("The following items are in this room: ");
         //Iterates through the items in the rooms, printing each elements name
-        currentRoom.getItemList().forEach((n) -> System.out.println(n.getName()));
+        currentRoom.printItems();
         //Checks if the current room has exits in each direction, if it does,
         //print the room name in that direction
         for (int i = 1; i <= 4; i++)
@@ -70,8 +75,44 @@ public class GameManager
                 System.out.println(connectedRoom.getName() + " is to your " + direction + ".");
             }
         }
+    }
 
-        System.out.println("\n");
+    public Item find(String toFind)
+    {
+        ArrayList<Item> roomItemList = currentRoom.getItemList();
+        ArrayList<Item> playerItemList = player.getItemList();
+        toFind = toFind.toUpperCase();
+        Item toReturn = null;
+        boolean itemFound = false;
+        //search for the item
+        for(int i = 0; i < roomItemList.size(); i++)
+        {
+            if(roomItemList.get(i).getName().toUpperCase().equals(toFind))
+            {
+                itemFound = true;
+                toReturn = roomItemList.get(i);
+            }
+        }
+        for(int i = 0; i < playerItemList.size(); i++)
+        {
+            if (playerItemList.get(i).getName().toUpperCase().equals(toFind))
+            {
+                itemFound = true;
+                toReturn = playerItemList.get(i);
+            }
+        }
+        //return either the item or a null with a message
+        if(itemFound)
+        {
+            return toReturn;
+        }
+        else
+        {
+            System.out.println("That item doesn't exist!");
+            return toReturn;
+        }
+
+
     }
 
     //Posssibly redundant again
@@ -84,15 +125,6 @@ public class GameManager
     {
         this.gameOver = gameOver;
     }
-
-    //Remove this when possible. Probably unneeded
-    public void getInput()
-    {
-        Scanner playerInput = new Scanner(System.in);
-        this.input = playerInput.nextLine();
-        playerInput.close();
-    }
-
     //Checks that  the input is valid
     //and performs actions depending on entered values
     public void parseInput(String input)
@@ -111,13 +143,13 @@ public class GameManager
                     case 'n':
                         movePlayer(1);
                         break;
-                    case 'w':
+                    case 's':
                         movePlayer(2);
                         break;
                     case 'e':
                         movePlayer(3);
                         break;
-                    case 's':
+                    case 'w':
                         movePlayer(4);
                         break;
                     case 'u':
@@ -133,12 +165,10 @@ public class GameManager
                     case 'i':
                         if (!player.getItemList().isEmpty())
                         {
+                            System.out.println("Your inventory: ");
                             for (int i = 0; i < player.getItemList().size(); i++)
                             {
-                                if (player.getItemList().get(i).getVisibility())
-                                {
-                                    System.out.println(player.getItemList().get(i).getName());
-                                }
+                                System.out.println("-" + player.getItemList().get(i).getName());
                             }
                         } else
                         {
@@ -152,32 +182,107 @@ public class GameManager
                         quitGame();
                         break;
                     default:
+                        System.out.println("I don't understand that, try again.");
                         break;
                 }
                 //Splits the users input into an array with the second element being
                 //the item the user attempts to take
-            } else if (input.toLowerCase().split(" ")[0].equals("take"))//This will probably cause errors in some cases
+            } else if(input.toUpperCase().split(" ")[0].equals("GO"))
             {
-                //Move this into a method at some point and fix likely error
-                //Research hiding or storing items in other items
-                String[] inputArray = input.toLowerCase().split(" ");
-                for (int i = 0; i < currentRoom.getItemList().size(); i++)
+                String[] inputArray = input.toUpperCase().split(" ");
+                inputArray = forceArraySize(inputArray);
+                if(inputArray[1] != null && !inputArray[1].isEmpty())
                 {
-                    if (currentRoom.getItemList().get(i).getName().toLowerCase().equals(inputArray[1]))
+                    switch(inputArray[1])
                     {
-                        player.addItem(currentRoom.getItemList().get(i));
-                        //Overload getItemList in future
-                        System.out.println("You got the " + currentRoom.getItemList().get(i).getName());
-                        currentRoom.removeItem(i);
-                        break; //Maybe find a better way to do this
+                    case("NORTH"):
+                    case("N"):
+                        movePlayer(1);
+                        break;
+                    case("SOUTH"):
+                    case("S"):
+                        movePlayer(2);
+                        break;
+                    case("EAST"):
+                    case("E"):
+                        movePlayer(3);
+                        break;
+                    case("WEST"):
+                    case("W"):
+                        movePlayer(4);
+                        break;
+                    case("UP"):
+                    case("U"):
+                        movePlayer(5);
+                        break;
+                    case("DOWN"):
+                    case("D"):
+                        movePlayer(6);
+                        break;
+                    default:
+                        System.out.println("That's not a valid direction!");
+                        break;
                     }
                 }
-                //Implement in future sprint
-            } else if (input.toLowerCase().split(" ")[0].equals("open"))//This will probably cause errors in some cases
+                else
+                {
+                    System.out.println("Please enter a direction after the \'go\' command.");
+                }
+
+            }else if (input.toUpperCase().split(" ")[0].equals("TAKE"))//This will probably cause errors in some cases
             {
-                //Make certain items openable using ItemContainer
-            } else if (input.toLowerCase().split(" ")[0].equals("examine"))
+                String[] inputArray = input.toUpperCase().split(" ");
+                inputArray = forceArraySize(inputArray);
+                if(inputArray[1] != null && !inputArray[1].isEmpty())
+                {
+                    takeItem(inputArray[1]);
+                }
+                else
+                {
+                    System.out.println("Take what?\n>");
+                    takeItem(keyboard.nextLine());
+                }
+
+            } else if (input.toUpperCase().split(" ")[0].equals("OPEN"))//This will probably cause errors in some cases
             {
+                String[] inputArray = input.toUpperCase().split(" ");
+                inputArray = forceArraySize(inputArray);
+                if(inputArray[1] != null && !inputArray[1].isEmpty())
+                {                    
+                    openItem(inputArray[1]);
+                }
+                else
+                {
+                    System.out.println("Open what?\n>");
+                    openItem(keyboard.nextLine());
+                }
+            } else if (input.toUpperCase().split(" ")[0].equals("DROP"))
+            {             
+                String[] inputArray = input.toUpperCase().split(" ");
+                inputArray = forceArraySize(inputArray);
+                if(inputArray[1] != null && !inputArray[1].isEmpty())
+                {                    
+                    dropItem(inputArray[1]);
+                }
+                else
+                {
+                    System.out.println("Drop what?\n>");
+                    dropItem(keyboard.nextLine());
+                }
+            } else if(input.toUpperCase().split(" ")[0].equals("EXAMINE"))
+            {             
+                String[] inputArray = input.toUpperCase().split(" ");
+                inputArray = forceArraySize(inputArray);
+                if(inputArray[1] != null && !inputArray[1].isEmpty())
+                {
+                    examineItem(inputArray[1]);  
+                }
+                else
+                {
+                    System.out.println("Examine what?");
+                    examineItem(keyboard.nextLine());
+                }
+                              
             } else
             {
                 System.out.println("I don't understand that. Try again");
@@ -185,30 +290,103 @@ public class GameManager
         }
     }
 
+    public String[] forceArraySize(String[] splitArray)
+    {
+        String[] fixedArray = new String[2];
+        fixedArray[0] = null;
+        fixedArray[1] = null;
+
+        if(splitArray.length >= fixedArray.length)
+        {
+            fixedArray = splitArray;
+        }
+        else
+        {
+            for(int i = 0; i < splitArray.length; i++)
+                fixedArray[i] = splitArray[i];
+        }
+
+        return fixedArray;
+    }
+    public void openItem(String toOpen)
+    {
+        //find and open an object if it's openable
+        if(find(toOpen) != null)
+        {
+            //have to send the current room to the open function so that it will add the items inside the container to the room's itemlist
+            find(toOpen).open(currentRoom);
+        }
+    }
+    public void dropItem(String toDrop)
+    {
+        if(find(toDrop) != null)
+        {
+            player.dropItem(currentRoom, find(toDrop));
+            System.out.println("You've dropped the " + find(toDrop).getName() + ".");
+        }
+    }
+
+    //method below to simplify finding items so that we don't have to code all this later on
+    //i've also simplified the methods that used the code
+   
     public void look()
     {
-        System.out.println(currentRoom.getRoomDesc());
+        if(currentRoom.getInternalDesc() != null)
+        {
+            System.out.println(currentRoom.getInternalDesc());
+        }
+        //turn the below into a method at some point
+        for (int i = 1; i <= 4; i++)
+        {
+            String direction;
+            switch (i)
+            {
+                case (1):
+                    direction = "north";
+                    break;
+                case (2):
+                    direction = "south";
+                    break;
+                case (3):
+                    direction = "east";
+                    break;
+                case (4):
+                    direction = "west";
+                    break;
+                default:
+                    direction = "ERROR: PLEASE REPORT DIRECTION BUG TO DEVELOPER.";
+                    break;
+            }
+            Room connectedRoom = currentRoom.getConnection(i);
+            if (connectedRoom != null)
+            {
+                System.out.println(connectedRoom.getName() + " is to your " + direction + ".");
+            }
+        }
+        //turn the above into a method at some point
+
+        System.out.print("The following items are in the room:");
         System.out.println(currentRoom.getItems());
     }
     //Examines the desired item regardless of whether it's in the room or the 
     //players inventory
-    public void examine(String toExamine)
+    public void examineItem(String toExamine)
     {
-        for (int i = 0; i < currentRoom.getItemList().size(); i++)
+        if(find(toExamine) != null)
         {
-            if (currentRoom.getItemList().get(i).getName().equals(toExamine))
-            //These calls are killing me inside. Change this at some point to look nicer
-            {
-                System.out.println(currentRoom.getItemList().get(i).getDesc());
-            } else if (player.getItemList().get(i).getName().equals(toExamine))
-            //These calls are killing me inside. Change this at some point to look nicer
-            {
-                System.out.println(player.getItemList().get(i).getDesc());
-            }
+            System.out.println(find(toExamine).getDesc());
         }
-
     }
 
+    public void takeItem(String toTake)
+    {
+        if(find(toTake) != null)
+        {
+            player.addItem(find(toTake));
+            System.out.println("You got the " + find(toTake).getName() + ".");
+            currentRoom.removeItem(find(toTake));
+        }
+    }
     public void getHelp()
     {
         System.out.println(HELPMESSAGE);
@@ -268,39 +446,6 @@ public class GameManager
     public boolean isPlayerAlive()
     {
         return player.isAlive();
-    }
-    //Probably going to remove this soon
-    public boolean doAction(String parsedInput)
-    {
-        boolean done = false;
-        switch (parsedInput.charAt(0))
-        {
-            case 'w':
-            case 'n':
-            case 'e':
-            case 's':
-            case 'u':
-            case 'd':
-                //this currently only checks for if the room exists. need to call the move in that direction variable.
-                done = currentRoom.changeRoom(parsedInput);
-                break;
-            //examine room
-            case 'l':
-                done = currentRoom.getRoomDesc();
-                //future update will check if 'l' is followed by anything, and then provide a description of whatever is being looked at
-                break;
-            //implement quit functionality
-            case 'q':
-                player.setAlive(false);
-                break;
-            //implement help function
-            case 'h':
-                //displayHelpMessage;
-                break;
-            default:
-                break;
-        }
-        return done;
     }
 
 }
