@@ -9,7 +9,7 @@ public class SamuraiStrike
 {
     //update the version number below
 
-    final static String VERSIONNUMBER = "v0.0.1";
+    final static String VERSIONNUMBER = "v0.2.0";
     //GAMEINTRO is printed once, at the beginning of the game
     final static String GAMEINTRO = "Welcome to the Software Samurai text-based game, Samurai Strike " + VERSIONNUMBER + "! \n "
             + "Thanks for playing! \n "
@@ -51,7 +51,6 @@ public class SamuraiStrike
         GameManager manager = new GameManager();
 
         manager.EnterRoom();
-
         while (manager.isPlayerAlive())
         {
             System.out.println();
