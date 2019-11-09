@@ -8,6 +8,7 @@ import java.util.Scanner;
  */
 public class GameManager
 {
+
     Scanner keyboard = new Scanner(System.in);
     //The room the player is currently in. Player starts in his house which is InitialRoom
     private Room currentRoom = null;
@@ -16,6 +17,8 @@ public class GameManager
     private boolean gameOver = false;
     //Player Object. Name, player inventory, and player status stored here
     Player player = new Player();
+    //Stores a list of possible synonyms. Should only be used inside of parseInput
+    SynonymFinder synFinder = new SynonymFinder();
     //Duplicated from SamuraiStrike.java. Probably a better way to do this.
     final String HELPMESSAGE = "You can use the following commands: "
             + "-\'go\' will go in the cardinal direction you enter\n"
@@ -38,8 +41,8 @@ public class GameManager
     public void EnterRoom()
     {
         System.out.println("You have entered " + currentRoom.getName() + "\n");
-        if(!currentRoom.getEntered())
-        {            
+        if (!currentRoom.getEntered())
+        {
             System.out.println(currentRoom.getIntro() + "\n"); //returns null for rooms besides initial room because we don't set it.
             currentRoom.setEntered(true);
         }
@@ -81,37 +84,34 @@ public class GameManager
     {
         ArrayList<Item> roomItemList = currentRoom.getItemList();
         ArrayList<Item> playerItemList = player.getItemList();
-        toFind = toFind.toUpperCase();
         Item toReturn = null;
         boolean itemFound = false;
         //search for the item
-        for(int i = 0; i < roomItemList.size(); i++)
+        for (int i = 0; i < roomItemList.size(); i++)
         {
-            if(roomItemList.get(i).getName().toUpperCase().equals(toFind))
+            if (roomItemList.get(i).getName().equalsIgnoreCase(toFind))
             {
                 itemFound = true;
                 toReturn = roomItemList.get(i);
             }
         }
-        for(int i = 0; i < playerItemList.size(); i++)
+        for (int i = 0; i < playerItemList.size(); i++)
         {
-            if (playerItemList.get(i).getName().toUpperCase().equals(toFind))
+            if (playerItemList.get(i).getName().equalsIgnoreCase(toFind))
             {
                 itemFound = true;
                 toReturn = playerItemList.get(i);
             }
         }
         //return either the item or a null with a message
-        if(itemFound)
+        if (itemFound)
         {
             return toReturn;
-        }
-        else
+        } else
         {
             System.out.println("That item doesn't exist!");
             return toReturn;
         }
-
 
     }
 
@@ -125,164 +125,101 @@ public class GameManager
     {
         this.gameOver = gameOver;
     }
+
     //Checks that  the input is valid
     //and performs actions depending on entered values
     public void parseInput(String input)
     {
+        String[] command = input.split(" ");
+        command[0] = synFinder.getCommand(command[0]);
         //Improve this in future sprints
         //Research possible better ways to parse the players input
-        if (input.isEmpty())
+        if (command[0].isEmpty())
         {
             System.out.println("Enter a command or type \'h\' for help");
         } else
         {
-            if (input.length() == 1)
+            if (command[0].equalsIgnoreCase("go"))
             {
-                switch (input.charAt(0))
-                {
-                    case 'n':
-                        movePlayer(1);
-                        break;
-                    case 's':
-                        movePlayer(2);
-                        break;
-                    case 'e':
-                        movePlayer(3);
-                        break;
-                    case 'w':
-                        movePlayer(4);
-                        break;
-                    case 'u':
-                        movePlayer(5);
-                        break;
-                    case 'd':
-                        movePlayer(6);
-                        break;
-                    case 'l':
-                        look();
-                        break;
-                    //Prints the players inventory
-                    case 'i':
-                        if (!player.getItemList().isEmpty())
-                        {
-                            System.out.println("Your inventory: ");
-                            for (int i = 0; i < player.getItemList().size(); i++)
-                            {
-                                System.out.println("-" + player.getItemList().get(i).getName());
-                            }
-                        } else
-                        {
-                            System.out.println("You dont have any items!");
-                        }
-                        break;
-                    case 'h':
-                        getHelp();
-                        break;
-                    case 'q':
-                        quitGame();
-                        break;
-                    default:
-                        System.out.println("I don't understand that, try again.");
-                        break;
-                }
-                //Splits the users input into an array with the second element being
-                //the item the user attempts to take
-            } else if(input.toUpperCase().split(" ")[0].equals("GO"))
-            {
-                String[] inputArray = input.toUpperCase().split(" ");
+                String[] inputArray = command;
                 inputArray = forceArraySize(inputArray);
-                if(inputArray[1] != null && !inputArray[1].isEmpty())
+                if (inputArray[1] != null && !inputArray[1].isEmpty())
                 {
-                    switch(inputArray[1])
+                    switch (command[1])
                     {
-                    case("NORTH"):
-                    case("N"):
-                        movePlayer(1);
-                        break;
-                    case("SOUTH"):
-                    case("S"):
-                        movePlayer(2);
-                        break;
-                    case("EAST"):
-                    case("E"):
-                        movePlayer(3);
-                        break;
-                    case("WEST"):
-                    case("W"):
-                        movePlayer(4);
-                        break;
-                    case("UP"):
-                    case("U"):
-                        movePlayer(5);
-                        break;
-                    case("DOWN"):
-                    case("D"):
-                        movePlayer(6);
-                        break;
-                    default:
-                        System.out.println("That's not a valid direction!");
-                        break;
+                        case ("north"):
+                            movePlayer(1);
+                            break;
+                        case ("south"):
+                            movePlayer(2);
+                            break;
+                        case ("east"):
+                            movePlayer(3);
+                            break;
+                        case ("west"):
+                            movePlayer(4);
+                            break;
+                        case ("up"):
+                            movePlayer(5);
+                            break;
+                        case ("down"):
+                            movePlayer(6);
+                            break;
+                        default:
+                            System.out.println("That's not a valid direction!");
+                            break;
                     }
                 }
-                else
-                {
-                    System.out.println("Please enter a direction after the \'go\' command.");
-                }
-
-            }else if (input.toUpperCase().split(" ")[0].equals("TAKE"))//This will probably cause errors in some cases
+            } else if (command[0].equalsIgnoreCase("take"))//This will probably cause errors in some cases
             {
-                String[] inputArray = input.toUpperCase().split(" ");
+                String[] inputArray = command;
                 inputArray = forceArraySize(inputArray);
-                if(inputArray[1] != null && !inputArray[1].isEmpty())
+                if (inputArray[1] != null && !inputArray[1].isEmpty())
                 {
                     takeItem(inputArray[1]);
-                }
-                else
+                } else
                 {
                     System.out.println("Take what?\n>");
                     takeItem(keyboard.nextLine());
                 }
 
-            } else if (input.toUpperCase().split(" ")[0].equals("OPEN"))//This will probably cause errors in some cases
+            } else if (command[0].equalsIgnoreCase("open"))//This will probably cause errors in some cases
             {
-                String[] inputArray = input.toUpperCase().split(" ");
+                String[] inputArray = command;
                 inputArray = forceArraySize(inputArray);
-                if(inputArray[1] != null && !inputArray[1].isEmpty())
-                {                    
+                if (inputArray[1] != null && !inputArray[1].isEmpty())
+                {
                     openItem(inputArray[1]);
-                }
-                else
+                } else
                 {
                     System.out.println("Open what?\n>");
                     openItem(keyboard.nextLine());
                 }
-            } else if (input.toUpperCase().split(" ")[0].equals("DROP"))
-            {             
-                String[] inputArray = input.toUpperCase().split(" ");
+            } else if (command[0].equalsIgnoreCase("drop"))
+            {
+                String[] inputArray = command;
                 inputArray = forceArraySize(inputArray);
-                if(inputArray[1] != null && !inputArray[1].isEmpty())
-                {                    
+                if (inputArray[1] != null && !inputArray[1].isEmpty())
+                {
                     dropItem(inputArray[1]);
-                }
-                else
+                } else
                 {
                     System.out.println("Drop what?\n>");
                     dropItem(keyboard.nextLine());
                 }
-            } else if(input.toUpperCase().split(" ")[0].equals("EXAMINE"))
-            {             
-                String[] inputArray = input.toUpperCase().split(" ");
+            } else if (command[0].equalsIgnoreCase("examine"))
+            {
+                String[] inputArray = command;
                 inputArray = forceArraySize(inputArray);
-                if(inputArray[1] != null && !inputArray[1].isEmpty())
+                if (inputArray[1] != null && !inputArray[1].isEmpty())
                 {
-                    examineItem(inputArray[1]);  
-                }
-                else
+                    examineItem(inputArray[1]);
+                } else
                 {
                     System.out.println("Examine what?");
                     examineItem(keyboard.nextLine());
                 }
-                              
+
             } else
             {
                 System.out.println("I don't understand that. Try again");
@@ -296,30 +233,33 @@ public class GameManager
         fixedArray[0] = null;
         fixedArray[1] = null;
 
-        if(splitArray.length >= fixedArray.length)
+        if (splitArray.length >= fixedArray.length)
         {
             fixedArray = splitArray;
-        }
-        else
+        } else
         {
-            for(int i = 0; i < splitArray.length; i++)
+            for (int i = 0; i < splitArray.length; i++)
+            {
                 fixedArray[i] = splitArray[i];
+            }
         }
 
         return fixedArray;
     }
+
     public void openItem(String toOpen)
     {
         //find and open an object if it's openable
-        if(find(toOpen) != null)
+        if (find(toOpen) != null)
         {
             //have to send the current room to the open function so that it will add the items inside the container to the room's itemlist
             find(toOpen).open(currentRoom);
         }
     }
+
     public void dropItem(String toDrop)
     {
-        if(find(toDrop) != null)
+        if (find(toDrop) != null)
         {
             player.dropItem(currentRoom, find(toDrop));
             System.out.println("You've dropped the " + find(toDrop).getName() + ".");
@@ -328,10 +268,9 @@ public class GameManager
 
     //method below to simplify finding items so that we don't have to code all this later on
     //i've also simplified the methods that used the code
-   
     public void look()
     {
-        if(currentRoom.getInternalDesc() != null)
+        if (currentRoom.getInternalDesc() != null)
         {
             System.out.println(currentRoom.getInternalDesc());
         }
@@ -368,11 +307,12 @@ public class GameManager
         System.out.print("The following items are in the room:");
         System.out.println(currentRoom.getItems());
     }
+
     //Examines the desired item regardless of whether it's in the room or the 
     //players inventory
     public void examineItem(String toExamine)
     {
-        if(find(toExamine) != null)
+        if (find(toExamine) != null)
         {
             System.out.println(find(toExamine).getDesc());
         }
@@ -380,13 +320,14 @@ public class GameManager
 
     public void takeItem(String toTake)
     {
-        if(find(toTake) != null)
+        if (find(toTake) != null)
         {
             player.addItem(find(toTake));
             System.out.println("You got the " + find(toTake).getName() + ".");
             currentRoom.removeItem(find(toTake));
         }
     }
+
     public void getHelp()
     {
         System.out.println(HELPMESSAGE);
@@ -402,6 +343,7 @@ public class GameManager
         this.currentRoom = currentRoom;
         EnterRoom();
     }
+
     //Most rooms will have a condition that needs to be met in order to leave it
     //this checks if the condition has been met and allows the player to move it
     //it has
@@ -436,6 +378,7 @@ public class GameManager
         //example of adding items below, to be moved to another method or class
         village.addItem(new Item("foo", "jar"));
     }
+
     //Likely what we want to use going forward
     //Consider adding different game over messages
     private void quitGame()
