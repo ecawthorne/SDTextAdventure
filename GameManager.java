@@ -219,7 +219,9 @@ public class GameManager
                     System.out.println("Examine what?");
                     examineItem(keyboard.nextLine());
                 }
-
+            } else if (command[0].equalsIgnoreCase("look"))
+            {
+                look();
             } else
             {
                 System.out.println("I don't understand that. Try again");
