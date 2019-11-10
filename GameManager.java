@@ -364,7 +364,7 @@ public class GameManager
     }
 
     //Constructs the game map and sets all connections
-    public void constructRooms()
+    final public void constructRooms()
     {
         //hardcode rooms built for game
         //example below
@@ -373,10 +373,6 @@ public class GameManager
         currentRoom = mainRoom;
         //Direction should be checked. Just setting in order to test
         mainRoom.setConnection(1, village);
-        //Are we making each room a unique object?        
-        //Room village = new Room("the village", 2, null, mainRoom);
-        //example of adding items below, to be moved to another method or class
-        village.addItem(new Item("foo", "jar"));
     }
 
     //Likely what we want to use going forward
