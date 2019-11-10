@@ -21,12 +21,11 @@ public class Item
     private boolean isContainer = false;
     public Item()
     {
-
+        this("Generic", "generic", true);
     }
     public Item(String name, String desc)
     {
-        this.name = name;
-        this.desc = desc;
+        this(name, desc, true);
     }
 
     public Item(String name, String desc, boolean isVisible)

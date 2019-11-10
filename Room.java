@@ -39,13 +39,22 @@ abstract public class Room
     Room()
     {
 
-        this("a generic room", "The room is generic.");
+        this("a generic room", "generic intro", "generic description");
     }
-
+    Room(String n)
+    {
+        this(n, "generic intro", "generic description");
+    }
     Room(String n, String intro)
     {
-        setName(n);
-        setIntro(intro);
+        this.name = n;
+        this.intro = intro;
+    }
+    Room(String n, String intro, String desc)
+    {
+        this.name = n;
+        this.intro = intro;
+        this.internalDesc = desc;
     }
     public void setName(String name)
     {

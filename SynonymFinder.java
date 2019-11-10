@@ -2,7 +2,9 @@
 import java.util.HashMap;
 
 /**
- *
+ * Creates a hashmap of synonyms. Each possible synonym is a key linked to the
+ * corresponding command which will be returned if found. Returns the users input
+ * if not found.
  * @author Eric
  */
 public class SynonymFinder

@@ -9,7 +9,7 @@ public class VillageRoom extends Room
 
     VillageRoom()
     {
-        setName("The Village");
+        super("The Village");
     }
 
     public VillageRoom(String n, int loc)
