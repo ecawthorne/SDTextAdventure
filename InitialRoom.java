@@ -44,9 +44,9 @@ class InitialRoom extends Room
     public void metLeaveCond(Player player)
     {
         ArrayList<Item> pItemList = player.getItemList();
-        for (int i = 0; i < itemList.size(); i++)
+        for (int i = 0; i < pItemList.size(); i++)
         {
-            if (itemList.get(i).getName().equals("Pitchfork"))
+            if (pItemList.get(i).getName().equals("Pitchfork"))
             {
                 setLeavable(true);
             }
