@@ -26,9 +26,11 @@ class InitialRoom extends Room
         ItemContainer wardrobe = new ItemContainer("Wardrobe", "It's a wardrobe.");
         wardrobe.addItem(new Item("Pitchfork", "The pitchfork can be used in "
                 + "battles or when cultivating. Be wise with it!"));
+        addItem(wardrobe);
         this.itemList.add(wardrobe);
+        addItem(new Item("Mirror", "You look handsome...but burnt."));
         this.itemList.add(new Item("Mirror", "You look handsome...but burnt."));
-        super.setLeavable(true);
+        setLeavable(false);
     }
     
     @Override
@@ -41,7 +43,7 @@ class InitialRoom extends Room
     @Override
     public void metLeaveCond(Player player)
     {
-        ArrayList<Item> itemList = player.getItemList();
+        ArrayList<Item> pItemList = player.getItemList();
         for (int i = 0; i < itemList.size(); i++)
         {
             if (itemList.get(i).getName().equals("Pitchfork"))
