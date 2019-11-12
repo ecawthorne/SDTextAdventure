@@ -26,11 +26,11 @@ class InitialRoom extends Room
         ItemContainer wardrobe = new ItemContainer("Wardrobe", "It's a wardrobe.");
         wardrobe.addItem(new Item("Pitchfork", "The pitchfork can be used in "
                 + "battles or when cultivating. Be wise with it!"));
-        addItem(wardrobe);
-        this.itemList.add(wardrobe);
-        addItem(new Item("Mirror", "You look handsome...but burnt."));
-        this.itemList.add(new Item("Mirror", "You look handsome...but burnt."));
-        setLeavable(false);
+        super.addItem(wardrobe);
+        
+        super.addItem(new Item("Mirror", "You look handsome...but burnt."));
+        
+        super.setLeavable(false);
     }
     
     @Override
