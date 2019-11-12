@@ -29,6 +29,9 @@ abstract public class Room
     private String leaveCond = null;
     //determine whether or not to print the intro based on if the player has been in the room before
     private boolean enteredBefore = false;
+    //Some rooms may have events that can kill the player or have some other
+    //function not performable by the metLeaveCond function
+    private boolean event = false;
 
     //direction variables for next rooms
     Room northConnection = null;
@@ -41,21 +44,25 @@ abstract public class Room
 
         this("a generic room", "generic intro", "generic description");
     }
+
     Room(String n)
     {
         this(n, "generic intro", "generic description");
     }
+
     Room(String n, String intro)
     {
         this.name = n;
         this.intro = intro;
     }
+
     Room(String n, String intro, String desc)
     {
         this.name = n;
         this.intro = intro;
         this.internalDesc = desc;
     }
+
     public void setName(String name)
     {
         this.name = name;
@@ -185,21 +192,22 @@ abstract public class Room
     {
         itemList.add(item);
     }
-    
+
     public void addItem(ItemContainer item)
     {
         itemList.add(item);
     }
-    
+
     public void removeItem(int index)
     {
         itemList.remove(index);
     }
-    
+
     public void removeItem(Item item)
     {
         itemList.remove(item);
     }
+
     public ArrayList<Item> getItemList()
     {
         return itemList;
@@ -212,7 +220,11 @@ abstract public class Room
 
     public void printItems()
     {
-        System.out.println(getItems());
+        if (!itemList.isEmpty())
+        {
+            System.out.print("The following items are in this room: ");
+            System.out.println(getItems());
+        }
     }
 
     public String getItems()
@@ -225,22 +237,22 @@ abstract public class Room
             {
                 visibleItems += "\n -" + itemList.get(i).getName();
                 //check to see if the object in the item list is a container
-                if(itemList.get(i).getContainerStatus())
+                if (itemList.get(i).getContainerStatus())
                 {
                     //if it is an item list, this below method will run
                     ArrayList<Item> containerList = ((ItemContainer) itemList.get(i)).getItemList();
                     //add each item inside the container to the visible list, if it isn't invisible for some reason
-                    if(containerList != null)
+                    if (containerList != null)
                     {
-                        for(int j = 0; j < containerList.size(); j++)
+                        for (int j = 0; j < containerList.size(); j++)
                         {
-                            if(containerList.get(j).getVisibility())
+                            if (containerList.get(j).getVisibility())
                             {
                                 visibleItems += "\n" + containerList.get(j).getName();
                             }
                         }
                     }
-                    
+
                 }
             }
         }
@@ -248,6 +260,7 @@ abstract public class Room
         //for loop printing item list
         return visibleItems;
     }
+
     //Research this. XML tags a possiblility for descriptions and loger strings
     public FileInputStream getFile()
     {
@@ -296,8 +309,24 @@ abstract public class Room
     {
         return enteredBefore;
     }
+
     public void setEntered(boolean enteredStatus)
     {
         enteredBefore = enteredStatus;
+    }
+
+    public boolean hasEvent()
+    {
+        return event;
+    }
+
+    public void setEventFlag(boolean flag)
+    {
+        event = flag;
+    }
+    //Override this in all subclasses
+    public void doEvent(Player player)
+    {
+        
     }
 }
