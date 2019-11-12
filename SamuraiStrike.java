@@ -51,13 +51,24 @@ public class SamuraiStrike
         GameManager manager = new GameManager();
 
         manager.EnterRoom();
-        while (manager.isPlayerAlive())
+        while (true)
         {
             System.out.println();
             System.out.println("What do you want to do?");
             System.out.print(">");
             //get user input
             manager.parseInput(keyboard.nextLine());
+            //Resets game variables if player wants to play again
+            if (!manager.isPlayerAlive())
+            {
+                System.out.println("Do you want to play again? y/n");
+                if (keyboard.nextLine().equalsIgnoreCase("n"))
+                {
+                    break;
+                }
+                manager = new GameManager();
+                manager.EnterRoom();
+            }
         }
 
         keyboard.close();
