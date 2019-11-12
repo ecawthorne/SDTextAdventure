@@ -46,7 +46,6 @@ public class GameManager
             System.out.println(currentRoom.getIntro() + "\n"); //returns null for rooms besides initial room because we don't set it.
             currentRoom.setEntered(true);
         }
-        System.out.print("The following items are in this room: ");
         //Iterates through the items in the rooms, printing each elements name
         currentRoom.printItems();
         //Checks if the current room has exits in each direction, if it does,
@@ -77,6 +76,10 @@ public class GameManager
             {
                 System.out.println(connectedRoom.getName() + " is to your " + direction + ".");
             }
+        }
+        if(currentRoom.hasEvent())
+        {
+            currentRoom.doEvent(player);
         }
     }
 
@@ -222,7 +225,11 @@ public class GameManager
             } else if (command[0].equalsIgnoreCase("look"))
             {
                 look();
-            } else
+            } else if(command[0].equalsIgnoreCase("quit"))
+            {
+                quitGame();
+            }
+            else
             {
                 System.out.println("I don't understand that. Try again");
             }
@@ -304,10 +311,7 @@ public class GameManager
                 System.out.println(connectedRoom.getName() + " is to your " + direction + ".");
             }
         }
-        //turn the above into a method at some point
-
-        System.out.print("The following items are in the room:");
-        System.out.println(currentRoom.getItems());
+        currentRoom.printItems();
     }
 
     //Examines the desired item regardless of whether it's in the room or the 
@@ -359,6 +363,7 @@ public class GameManager
         } else if (toMove != null)
         {
             setCurrentRoom(toMove);
+            EnterRoom();
         } else
         {
             System.out.println("You can't move in that direction.");
@@ -381,7 +386,8 @@ public class GameManager
     //Consider adding different game over messages
     private void quitGame()
     {
-        player.setAlive(false);
+        System.out.println("Thanks for playing!");
+        System.exit(0);
     }
 
     public boolean isPlayerAlive()
