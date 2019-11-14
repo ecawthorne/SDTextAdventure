@@ -37,3 +37,16 @@ FIXED BUG(S):
 
 KNOWN BUG(S):
 -All items, including the wardrobe(ItemContainer) can be taken, and will contain the item inside them until opened. Will be addressed in future versions.
+
+==================
+SamuraiStrike v0.3
+==================
+-SynonymFinder class added to allow players to enter various different commands for the same results.
+-Ogre encounter now implemented.
+-Main game loop handling has been changed.
+
+KNOWN BUG(S):
+-Ogre encounter will break the game if player is killed.
+  +Suspected reason: Main game loop not recursive and operating strangely.
+-All items, including the wardrobe(ItemContainer) can be taken, and will contain the item inside them until opened. Will be addressed in future versions.
+
