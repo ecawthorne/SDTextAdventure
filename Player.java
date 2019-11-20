@@ -12,12 +12,10 @@ public class Player
     private String name = null;
     private ArrayList<Item> itemList = new ArrayList<>();
     private boolean alive = true;
-    private Room currentRoom = null;
 
     public Player()
     {
         name = "Torvald";
-        currentRoom = new InitialRoom();
     }
 
     public String getName()
@@ -44,6 +42,15 @@ public class Player
     {
         itemList.add(item);
     }
+    public void remItem(Item item)
+    {
+        itemList.remove(item);
+    }
+    public void dropItem(Room room, Item item)
+    {
+        room.addItem(item);
+        remItem(item);
+    }
 
     public ArrayList<Item> getItemList()
     {
@@ -53,36 +60,5 @@ public class Player
     public void setItemList(ArrayList<Item> itemList)
     {
         this.itemList = itemList;
-    }
-    //Double check but most likely remove this
-    public boolean doAction(String parsedInput)
-    {
-        boolean done = false;
-        switch (parsedInput.charAt(0))
-        {
-            case 'w':
-            case 'n':
-            case 'e':
-            case 's':
-            case 'u':
-            case 'd':
-                done = currentRoom.changeRoom(parsedInput);
-                break;
-            //examine room
-            case 'l':
-                done = currentRoom.getRoomDesc(); //future update will check if 'l' is followed by anything, and then provide a description of whatever is being looked at
-                break;
-            //implement quit functionality
-            case 'q':
-                setAlive(false);
-                break;
-            //implement help function
-            case 'h':
-                //displayHelpMessage;
-                break;
-            default:
-                break;
-        }
-        return done;
     }
 }
