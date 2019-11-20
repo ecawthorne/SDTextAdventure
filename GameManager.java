@@ -225,7 +225,11 @@ public class GameManager
             } else if (command[0].equalsIgnoreCase("look"))
             {
                 look();
-            } else if(command[0].equalsIgnoreCase("quit"))
+            } else if(command[0].equalsIgnoreCase("help"))
+            {
+                getHelp();
+            }
+            else if(command[0].equalsIgnoreCase("quit"))
             {
                 quitGame();
             }
