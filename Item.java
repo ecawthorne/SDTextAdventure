@@ -3,8 +3,7 @@
 /**
  *
  * @author Eric
- * edited by Chase 10/22/2019
- * edited by Chase 10/23/2019
+ * @author Chase
  */
 public class Item
 {
@@ -21,12 +20,11 @@ public class Item
     private boolean isContainer = false;
     public Item()
     {
-
+        this("Generic", "generic", true);
     }
     public Item(String name, String desc)
     {
-        this.name = name;
-        this.desc = desc;
+        this(name, desc, true);
     }
 
     public Item(String name, String desc, boolean isVisible)
