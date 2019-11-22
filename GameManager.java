@@ -85,6 +85,14 @@ public class GameManager
         }
     }
 
+    /**
+     * Loop through items in the room and items in the inventory
+     * returns null if nothing found, or the item
+     * <p>
+     * Always check if method returns null first, or errors will occur.
+     * @param toFind string name of item to be found  
+     * @return item object matching searched name, or null
+    */
     public Item find(String toFind)
     {
         ArrayList<Item> roomItemList = currentRoom.getItemList();
@@ -242,6 +250,14 @@ public class GameManager
         }
     }
 
+    /**
+     * Used to prevent out of bounds exceptions
+     * and also make comparing inputs easier.
+     * <p>
+     * Called in parseInput() method.
+     * @param splitArray array to be broken into two
+     * @return the corrected array
+     */
     public String[] forceArraySize(String[] splitArray)
     {
         String[] fixedArray = new String[2];
@@ -262,16 +278,29 @@ public class GameManager
         return fixedArray;
     }
 
+    /**
+     * Opens a specified container (if it exists)
+     * and unloads all the contents into the room itemList
+     * @param toOpen item to be located and opened
+     */
     public void openItem(String toOpen)
     {
         //find and open an object if it's openable
         if (find(toOpen) != null)
         {
-            //have to send the current room to the open function so that it will add the items inside the container to the room's itemlist
+            //have to send the current room to the open 
+            //function so that it will add the items inside 
+            //the container to the room's itemlist
             find(toOpen).open(currentRoom);
         }
     }
 
+    /**
+     * Drops a specified item (if it exists)
+     * and adds it to the room itemList
+     * ToDo: fix drop method so a player cannot drop an item they don't have
+     * @param toDrop item to be removed from player itemlist and added to room
+     */
     public void dropItem(String toDrop)
     {
         if (find(toDrop) != null)
@@ -281,8 +310,11 @@ public class GameManager
         }
     }
 
-    //method below to simplify finding items so that we don't have to code all this later on
-    //i've also simplified the methods that used the code
+    /**
+     * Prints description of current room
+     * Describes the rooms in each direction, if they exist
+     * Currently only prints the name of the room 
+     */
     public void look()
     {
         if (currentRoom.getInternalDesc() != null)
@@ -320,8 +352,10 @@ public class GameManager
         currentRoom.printItems();
     }
 
-    //Examines the desired item regardless of whether it's in the room or the 
-    //players inventory
+    /**
+     * Finds a targeted item and prints its description
+     * @param toExamine string name of item to be found and examined
+     */
     public void examineItem(String toExamine)
     {
         if (find(toExamine) != null)
@@ -330,6 +364,10 @@ public class GameManager
         }
     }
 
+    /**
+     * Adds item, if it exists, by string name to player itemlist
+     * @param toTake string name of item to add to inventory
+     */
     public void takeItem(String toTake)
     {
         if (find(toTake) != null)
@@ -340,6 +378,7 @@ public class GameManager
         }
     }
 
+    //print help message
     public void getHelp()
     {
         System.out.println(HELPMESSAGE);
@@ -349,7 +388,10 @@ public class GameManager
     {
         return currentRoom;
     }
-
+  
+    /**
+     * @param currentRoom new room object to be defined as current room
+     */
     public void setCurrentRoom(Room currentRoom)
     {
         this.currentRoom = currentRoom;
@@ -359,6 +401,14 @@ public class GameManager
     //Most rooms will have a condition that needs to be met in order to leave it
     //this checks if the condition has been met and allows the player to move it
     //it has
+    /**
+     * If the room has a condition to leave, it is checked
+     * Allows the player to move if condition has been met
+     * Otherwise, it prints what needs to be done.
+     * If a room doesn't exist, then it
+     * informs the player
+     * @param direction
+     */
     public void movePlayer(int direction)
     {
         Room toMove = currentRoom.getConnection(direction);
@@ -388,8 +438,7 @@ public class GameManager
         mainRoom.setConnection(1, village);
     }
 
-    //Likely what we want to use going forward
-    //Consider adding different game over messages
+    //ToDo: Consider adding different game over messages
     private void quitGame()
     {
         System.out.println("Thanks for playing!");

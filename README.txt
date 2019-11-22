@@ -50,3 +50,20 @@ KNOWN BUG(S):
   +Suspected reason: Main game loop not recursive and operating strangely.
 -All items, including the wardrobe(ItemContainer) can be taken, and will contain the item inside them until opened. Will be addressed in future versions.
 
+====================
+SamuraiStrike v0.3.1
+====================
+-Main game loop handling refactored to a recursive form.
+
+FIXED BUG(S):
+-Ogre encounter glitch mended.
+>Fix: Instanced scanner instead of two scanners expecting input in the same scope.
+KNOWN BUG(S):
+-All items, including the wardrobe(ItemContainer) can be taken, and will contain the item inside them until opened. Will be addressed in future versions.
+-Player can drop items they don't have, and pick up items that are in their inventory. These actions duplicate the item.
+
+====================
+SamuraiStrike v0.3.2
+====================
+v0.3.1 issues remain
+Updates: Comments in GameManager updated and tags such as @params, @return, and ToDo: have been added.
