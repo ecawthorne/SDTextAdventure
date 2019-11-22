@@ -82,7 +82,7 @@ public class GameManager
         {            
             setEventLive(true);
             currentRoom.doEvent(this, player);
-        }
+
     }
 
     /**
@@ -278,6 +278,7 @@ public class GameManager
         return fixedArray;
     }
 
+
     /**
      * Opens a specified container (if it exists)
      * and unloads all the contents into the room itemList
@@ -295,6 +296,7 @@ public class GameManager
         }
     }
 
+
     /**
      * Drops a specified item (if it exists)
      * and adds it to the room itemList
@@ -309,6 +311,7 @@ public class GameManager
             System.out.println("You've dropped the " + find(toDrop).getName() + ".");
         }
     }
+
 
     /**
      * Prints description of current room
