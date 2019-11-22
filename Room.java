@@ -326,7 +326,7 @@ abstract public class Room
         event = flag;
     }
     //Override this in all subclasses
-    public void doEvent(Player player)
+    public void doEvent(GameManager manager, Player player)
     {
         
     }

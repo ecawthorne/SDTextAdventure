@@ -27,7 +27,7 @@ public class VillageRoom extends Room
     }
 
     @Override
-    public void doEvent(Player player)
+    public void doEvent(GameManager manager, Player player)
     {
         //1 in 5 chance to kill the player if they do not type hit
         Random randNum = new Random();
@@ -54,6 +54,7 @@ public class VillageRoom extends Room
             System.out.println("Congrats, you just added a sleeping potion to"
                     + " your inventory!");
             player.addItem(new Item("SleepingPotion", "It's a sleeping potion"));
+            manager.setEventLive(false);
             super.setLeavable(true);
             super.setEventFlag(false);
         }

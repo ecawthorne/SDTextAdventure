@@ -79,9 +79,9 @@ public class GameManager
             }
         }
         if(currentRoom.hasEvent())
-        {
-            currentRoom.doEvent(player);
-            eventLive = true;
+        {            
+            setEventLive(true);
+            currentRoom.doEvent(this, player);
         }
     }
 
@@ -412,6 +412,7 @@ public class GameManager
     public void movePlayer(int direction)
     {
         Room toMove = currentRoom.getConnection(direction);
+        //what is the below line here for?
         currentRoom.metLeaveCond(player);
         if (!currentRoom.isLeavable())
         {
@@ -419,7 +420,8 @@ public class GameManager
         } else if (toMove != null)
         {
             setCurrentRoom(toMove);
-            EnterRoom();
+            //i think this enterroom function was being double called?
+            //EnterRoom();
         } else
         {
             System.out.println("You can't move in that direction.");
@@ -452,6 +454,10 @@ public class GameManager
     public boolean doingEvent()
     {
         return eventLive;
+    }
+    public void setEventLive(boolean eventStatus)
+    {
+        eventLive = eventStatus;
     }
 
 }

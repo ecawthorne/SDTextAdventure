@@ -67,3 +67,27 @@ SamuraiStrike v0.3.2
 ====================
 v0.3.1 issues remain
 Updates: Comments in GameManager updated and tags such as @params, @return, and ToDo: have been added.
+
+KNOWN BUG(S):
+-Infinite loop after ogre encounter.
++Possible reason: new boolean added but not updated.
+-Inventory command missing.
+-Item pickup glitch.
+-Item drop glitch.
+-Container pickup glitch.
+
+====================
+SamuraiStrike v0.3.3
+====================
+v0.3.2 issues remain
+Minor bug fixes.
+
+FIXED BUG(S):
+-Infinite loop after ogre encounter.
+
+KNOWN BUG(S):
++Possible reason: new boolean added but not updated.
+-Inventory command missing.
+-Item pickup glitch.
+-Item drop glitch.
+-Container pickup glitch.
