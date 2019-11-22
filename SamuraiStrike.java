@@ -1,9 +1,10 @@
-
 import java.util.Scanner;
 
 /**
  *
- * @author Eric edited by Chase 10/23/2019
+ * @author Eric
+ * @author Chase
+ * @version 0.3.0
  */
 public class SamuraiStrike
 {
@@ -26,30 +27,37 @@ public class SamuraiStrike
             + "\'l\' will look, providing a description of the room. \n"
             + "\'a\' will appraise an item in the room or your inventory."
             + "\'q\' will quit the game. \n"
-            + "";
+            + "";            
+    final static Scanner keyboard = new Scanner(System.in);
 
-    public static void main(String[] args)
-    {
+    public static void main(final String[] args) {
 
         DisplayMenu();
         RunGame();
     }
-
-    public static void DisplayMenu()
-    {
+    
+    //prints the introduction to the game
+    public static void DisplayMenu() {
         System.out.println(GAMEINTRO);
     }
 
-    public void BuildObjects()
-    {
-
+    //checks if the player wants to play the game
+    //if the input is 1, then recursively call the RunGame() function
+    public static boolean PlayAgain() {
+        System.out.println("Please enter 1 if you would like to play again, or anything else to quit.");
+        String input = keyboard.nextLine();
+        input = input.strip();
+        if (input.equals("1")) {
+            return true;
+        } else {
+            System.out.println("Thank you for playing Samurai Strike!");
+            return false;
+        }
     }
 
-    public static void RunGame()
-    {
-        Scanner keyboard = new Scanner(System.in);
-        GameManager manager = new GameManager();
-
+    //loop for player input, calling the gamemanager
+    public static void RunGame() {
+        final GameManager manager = new GameManager();
         manager.EnterRoom();
         while (true)
         {
@@ -57,18 +65,14 @@ public class SamuraiStrike
             System.out.println("What do you want to do?");
             System.out.print(">");
             //get user input
-            manager.parseInput(keyboard.nextLine());
-            //Resets game variables if player wants to play again
-            if (!manager.isPlayerAlive())
+            if(!manager.doingEvent())
             {
-                System.out.println("Do you want to play again? y/n");
-                if (keyboard.nextLine().equalsIgnoreCase("n"))
-                {
-                    break;
-                }
-                manager = new GameManager();
-                manager.EnterRoom();
+                manager.parseInput(keyboard.nextLine());
             }
+        }
+        if(PlayAgain())
+        {            
+            RunGame();
         }
 
         keyboard.close();

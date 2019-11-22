@@ -12,7 +12,7 @@ public class SynonymFinder
     String[] words = new String[] {"quit", "help", "go", "north", "east", "south",
                                    "west", "take", "drop", "examine", "open", 
                                    "up", "down", "look"};
-    //Multi word strings probably break the parser, investigate as soon as possible
+    //ToDo: Multi word strings probably break the parser, investigate as soon as possible
     String[][] syns = new String[][] {{"q", "exit", "stop", "terminate", "finish"},
                                           {"h"},{"g", "move", "walk", "run"}, {"n"},{"e"}, {"s"},
                                           {"w"}, {"t", "pick up", "steal"},
