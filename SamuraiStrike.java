@@ -46,7 +46,7 @@ public class SamuraiStrike
     public static boolean PlayAgain() {
         System.out.println("Please enter 1 if you would like to play again, or anything else to quit.");
         String input = keyboard.nextLine();
-        input = input.strip();
+        input = input.trim();
         if (input.equals("1")) {
             return true;
         } else {
