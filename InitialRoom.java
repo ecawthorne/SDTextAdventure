@@ -7,7 +7,6 @@ import java.util.Scanner;
  */
 class InitialRoom extends Room
 {
-    private ArrayList<Item> itemList = new ArrayList<>();
     //Sets up room title and descriptions and adds items that will be in the room to
     //the rooms inventory
     InitialRoom()

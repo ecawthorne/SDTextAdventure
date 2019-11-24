@@ -32,11 +32,68 @@ SamuraiStrike v0.2
 -Game will now catch failures for things like "open" followed by a blank, and force you to enter something.
 
 ==================
+SamuraiStrike v0.3
+==================
+-SynonymFinder class added to allow players to enter various different commands for the same results.
+-Ogre encounter now implemented.
+-Main game loop handling has been changed.
+
+KNOWN BUG(S):
+-Ogre encounter will break the game if player is killed.
+  +Suspected reason: Main game loop not recursive and operating strangely.
+-All items, including the wardrobe(ItemContainer) can be taken, and will contain the item inside them until opened. Will be addressed in future versions.
+
+====================
+SamuraiStrike v0.3.1
+====================
+-Main game loop handling refactored to a recursive form.
+
+FIXED BUG(S):
+-Ogre encounter glitch mended.
+>Fix: Instanced scanner instead of two scanners expecting input in the same scope.
+KNOWN BUG(S):
+-All items, including the wardrobe(ItemContainer) can be taken, and will contain the item inside them until opened. Will be addressed in future versions.
+-Player can drop items they don't have, and pick up items that are in their inventory. These actions duplicate the item.
+
+====================
+SamuraiStrike v0.3.2
+====================
+v0.3.1 issues remain
+Updates: Comments in GameManager updated and tags such as @params, @return, and ToDo: have been added.
+
+KNOWN BUG(S):
+-Infinite loop after ogre encounter.
++Possible reason: new boolean added but not updated.
+-Inventory command missing.
+-Item pickup glitch.
+-Item drop glitch.
+-Container pickup glitch.
+
+====================
+SamuraiStrike v0.3.3
+====================
+v0.3.2 issues remain
+Minor bug fixes.
+
+FIXED BUG(S):
+-Infinite loop after ogre encounter.
+
+KNOWN BUG(S):
++Possible reason: new boolean added but not updated.
+-Inventory command missing.
+-Item pickup glitch.
+-Item drop glitch.
+-Container pickup glitch.
+
+==================
 SamuraiStrike v0.3.4
 ==================
 -Fixed help command
--Fixed exception for certain special characters
+-Fixed exception that was occuring when certain certain special characters were entered as input
 
 KNOWN BUG(S):
--All items, including the wardrobe(ItemContainer) can be taken, and will contain the item inside them until opened. Will be addressed in future versions.
--Items in a room can be picked up and dropped multiple times, allowing all items to be duplicated.
++Possible reason: new boolean added but not updated.
+-Inventory command missing.
+-Item pickup glitch.
+-Item drop glitch.
+-Container pickup glitch.

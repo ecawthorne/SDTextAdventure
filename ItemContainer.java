@@ -3,6 +3,7 @@ import java.util.ArrayList;
 /**
  *
  * @author Eric
+ * @author Chase
  */
 //Expand this in future sprint Chests, wardrobes, etc
 public class ItemContainer extends Item

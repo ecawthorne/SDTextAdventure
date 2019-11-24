@@ -3,8 +3,7 @@
 /**
  *
  * @author Eric
- * edited by Chase 10/22/2019
- * edited by Chase 10/23/2019
+ * @author Chase
  */
 public class Item
 {

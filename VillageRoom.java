@@ -25,11 +25,12 @@ public class VillageRoom extends Room
     {
 
     }
-
+    /*The player must type hit in order to kill the ogre and leave the room.
+      If the player fails to type hit then there is a one in five chance for 
+      the player to be killed and for the game to end.*/
     @Override
-    public void doEvent(Player player)
+    public void doEvent(GameManager manager, Player player)
     {
-        //1 in 5 chance to kill the player if they do not type hit
         Random randNum = new Random();
         int killPlayer = 1;
         Scanner keyboard = new Scanner(System.in);
@@ -39,7 +40,7 @@ public class VillageRoom extends Room
         {
             if (randNum.nextInt(4) == killPlayer)
             {
-                System.out.println("That didn't work! The last thing you see is"
+                System.out.println("That didn't work! The last thing you see is "
                         + "the ogre's axe swinging towards your face");
                 player.setAlive(false);
                 break;
@@ -54,6 +55,7 @@ public class VillageRoom extends Room
             System.out.println("Congrats, you just added a sleeping potion to"
                     + " your inventory!");
             player.addItem(new Item("SleepingPotion", "It's a sleeping potion"));
+            manager.setEventLive(false);
             super.setLeavable(true);
             super.setEventFlag(false);
         }
