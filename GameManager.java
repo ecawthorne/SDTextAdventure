@@ -13,7 +13,7 @@ public class GameManager
     //The room the player is currently in. Player starts in his house which is InitialRoom
     private Room currentRoom = null;
     String input = null;
-    //Probably redundant. Check and remove if it is
+    //TODO Probably redundant. Check and remove if it is
     private boolean gameOver = false;
     //Player Object. Name, player inventory, and player status stored here
     Player player = new Player();
@@ -31,6 +31,7 @@ public class GameManager
             + "-\'q\' will quit the game. \n";
 
     private boolean eventLive = false;
+
     //No arguements passed when creating GameManager. Creates the currently implemented map
     GameManager()
     {
@@ -78,21 +79,23 @@ public class GameManager
                 System.out.println(connectedRoom.getName() + " is to your " + direction + ".");
             }
         }
-        if(currentRoom.hasEvent())
-        {            
+        if (currentRoom.hasEvent())
+        {
             setEventLive(true);
             currentRoom.doEvent(this, player);
 
+        }
     }
 
     /**
-     * Loop through items in the room and items in the inventory
-     * returns null if nothing found, or the item
+     * Loop through items in the room and items in the inventory returns null if
+     * nothing found, or the item
      * <p>
      * Always check if method returns null first, or errors will occur.
-     * @param toFind string name of item to be found  
+     *
+     * @param toFind string name of item to be found
      * @return item object matching searched name, or null
-    */
+     */
     public Item find(String toFind)
     {
         ArrayList<Item> roomItemList = currentRoom.getItemList();
@@ -128,7 +131,7 @@ public class GameManager
 
     }
 
-    //Posssibly redundant again
+    //TODO Possibly redundant, remove if so
     public boolean isGameOver()
     {
         return gameOver;
@@ -145,8 +148,6 @@ public class GameManager
     {
         String[] command = input.split(" ");
         command[0] = synFinder.getCommand(command[0]);
-        //Improve this in future sprints
-        //Research possible better ways to parse the players input
         if (command[0].isEmpty())
         {
             System.out.println("Enter a command or type \'h\' for help");
@@ -183,7 +184,7 @@ public class GameManager
                             break;
                     }
                 }
-            } else if (command[0].equalsIgnoreCase("take"))//This will probably cause errors in some cases
+            } else if (command[0].equalsIgnoreCase("take"))
             {
                 String[] inputArray = command;
                 inputArray = forceArraySize(inputArray);
@@ -196,7 +197,7 @@ public class GameManager
                     takeItem(keyboard.nextLine());
                 }
 
-            } else if (command[0].equalsIgnoreCase("open"))//This will probably cause errors in some cases
+            } else if (command[0].equalsIgnoreCase("open"))
             {
                 String[] inputArray = command;
                 inputArray = forceArraySize(inputArray);
@@ -235,15 +236,13 @@ public class GameManager
             } else if (command[0].equalsIgnoreCase("look"))
             {
                 look();
-            } else if(command[0].equalsIgnoreCase("help"))
+            } else if (command[0].equalsIgnoreCase("help"))
             {
                 getHelp();
-            }
-            else if(command[0].equalsIgnoreCase("quit"))
+            } else if (command[0].equalsIgnoreCase("quit"))
             {
                 quitGame();
-            }
-            else
+            } else
             {
                 System.out.println("I don't understand that. Try again");
             }
@@ -251,10 +250,11 @@ public class GameManager
     }
 
     /**
-     * Used to prevent out of bounds exceptions
-     * and also make comparing inputs easier.
+     * Used to prevent out of bounds exceptions and also make comparing inputs
+     * easier.
      * <p>
      * Called in parseInput() method.
+     *
      * @param splitArray array to be broken into two
      * @return the corrected array
      */
@@ -278,10 +278,10 @@ public class GameManager
         return fixedArray;
     }
 
-
     /**
-     * Opens a specified container (if it exists)
-     * and unloads all the contents into the room itemList
+     * Opens a specified container (if it exists) and unloads all the contents
+     * into the room itemList
+     *
      * @param toOpen item to be located and opened
      */
     public void openItem(String toOpen)
@@ -296,11 +296,10 @@ public class GameManager
         }
     }
 
-
     /**
-     * Drops a specified item (if it exists)
-     * and adds it to the room itemList
+     * Drops a specified item (if it exists) and adds it to the room itemList
      * ToDo: fix drop method so a player cannot drop an item they don't have
+     *
      * @param toDrop item to be removed from player itemlist and added to room
      */
     public void dropItem(String toDrop)
@@ -312,11 +311,9 @@ public class GameManager
         }
     }
 
-
     /**
-     * Prints description of current room
-     * Describes the rooms in each direction, if they exist
-     * Currently only prints the name of the room 
+     * Prints description of current room Describes the rooms in each direction,
+     * if they exist Currently only prints the name of the room
      */
     public void look()
     {
@@ -324,7 +321,6 @@ public class GameManager
         {
             System.out.println(currentRoom.getInternalDesc());
         }
-        //turn the below into a method at some point
         for (int i = 1; i <= 4; i++)
         {
             String direction;
@@ -357,6 +353,7 @@ public class GameManager
 
     /**
      * Finds a targeted item and prints its description
+     *
      * @param toExamine string name of item to be found and examined
      */
     public void examineItem(String toExamine)
@@ -369,6 +366,7 @@ public class GameManager
 
     /**
      * Adds item, if it exists, by string name to player itemlist
+     *
      * @param toTake string name of item to add to inventory
      */
     public void takeItem(String toTake)
@@ -391,7 +389,7 @@ public class GameManager
     {
         return currentRoom;
     }
-  
+
     /**
      * @param currentRoom new room object to be defined as current room
      */
@@ -401,15 +399,11 @@ public class GameManager
         EnterRoom();
     }
 
-    //Most rooms will have a condition that needs to be met in order to leave it
-    //this checks if the condition has been met and allows the player to move it
-    //it has
     /**
-     * If the room has a condition to leave, it is checked
-     * Allows the player to move if condition has been met
-     * Otherwise, it prints what needs to be done.
-     * If a room doesn't exist, then it
-     * informs the player
+     * If the room has a condition to leave, it is checked Allows the player to
+     * move if condition has been met Otherwise, it prints what needs to be
+     * done. If a room doesn't exist, then it informs the player
+     *
      * @param direction
      */
     public void movePlayer(int direction)
@@ -454,10 +448,12 @@ public class GameManager
     {
         return player.isAlive();
     }
+
     public boolean doingEvent()
     {
         return eventLive;
     }
+
     public void setEventLive(boolean eventStatus)
     {
         eventLive = eventStatus;

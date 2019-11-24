@@ -25,11 +25,12 @@ public class VillageRoom extends Room
     {
 
     }
-
+    /*The player must type hit in order to kill the ogre and leave the room.
+      If the player fails to type hit then there is a one in five chance for 
+      the player to be killed and for the game to end.*/
     @Override
     public void doEvent(GameManager manager, Player player)
     {
-        //1 in 5 chance to kill the player if they do not type hit
         Random randNum = new Random();
         int killPlayer = 1;
         Scanner keyboard = new Scanner(System.in);
