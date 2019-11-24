@@ -1,9 +1,9 @@
-//Dummy class for the moment
 
 import java.util.Scanner;
 import java.util.Random;
 
 /**
+ * Village room holding the ogre event
  *
  * @author Eric
  */
@@ -20,14 +20,14 @@ public class VillageRoom extends Room
         super.setEventFlag(true);
     }
 
-    @Override
-    public void metLeaveCond(Player player)
-    {
-
-    }
-    /*The player must type hit in order to kill the ogre and leave the room.
-      If the player fails to type hit then there is a one in five chance for 
-      the player to be killed and for the game to end.*/
+    /**
+     * The player must type hit in order to kill the ogre and leave the room. If
+     * the player fails to type hit then there is a one in five chance for the
+     * player to be killed and for the game to end.
+     *
+     * @param manager
+     * @param player
+     */
     @Override
     public void doEvent(GameManager manager, Player player)
     {
@@ -36,8 +36,10 @@ public class VillageRoom extends Room
         Scanner keyboard = new Scanner(System.in);
         System.out.println("The ogre swings his axe towards you! Try to >HIT< him first!");
         System.out.print("What do you want to do?\n>");
+        //Continues until the player enters hit or the player is killed
         while (!keyboard.nextLine().equalsIgnoreCase("hit") && player.isAlive())
         {
+            //If true, kills the player and ends the loop
             if (randNum.nextInt(4) == killPlayer)
             {
                 System.out.println("That didn't work! The last thing you see is "
@@ -48,6 +50,8 @@ public class VillageRoom extends Room
             System.out.println("That didn't work! Luckily the ogre missed!");
             System.out.print("What do you want to do?\n>");
         }
+        //If the player entered the correct input, add the item to his inventory
+        //and allow the player to leave the room
         if (player.isAlive())
         {
             System.out.println("You stabbed the ogre with the pitchfork, "

@@ -3,7 +3,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
- *
+ * Execution starts in this class. Holds versioning information and intro to game
  * @author Eric
  * @author Chase
  * @version 0.3.4
@@ -19,6 +19,11 @@ public class SamuraiStrike
             + "Type 'h' for help menu.\n";
     static Scanner keyboard = new Scanner(System.in);
 
+    /**
+     * Execution starts here
+     *
+     * @param args
+     */
     public static void main(final String[] args)
     {
 
@@ -26,14 +31,18 @@ public class SamuraiStrike
         RunGame();
     }
 
-    //prints the introduction to the game
+    /**
+     * Prints the introduction to the game
+     */
     public static void DisplayMenu()
     {
         System.out.println(GAMEINTRO);
     }
 
-    //checks if the player wants to play the game
-    //if the input is 1, then recursively call the RunGame() function
+    /**
+     * Checks if the player wants to play the game if the input is 1, then
+     * recursively call the RunGame() function
+     */
     public static boolean PlayAgain()
     {
         System.out.println("Please enter 1 if you would like to play again, or anything else to quit.");
@@ -49,7 +58,9 @@ public class SamuraiStrike
         }
     }
 
-    //loop for player input, calling the gamemanager
+    /**
+     * Main game loop. Player input is taken here
+     */
     public static void RunGame()
     {
         final GameManager manager = new GameManager();
@@ -61,7 +72,7 @@ public class SamuraiStrike
             System.out.println();
             System.out.println("What do you want to do?");
             System.out.print(">");
-            //get user input
+            //This should catch characters that the Scanner does not recognize
             try
             {
                 input = keyboard.nextLine();
@@ -70,10 +81,12 @@ public class SamuraiStrike
                 keyboard = new Scanner(System.in);
                 input = "";
             }
+            //If the player is not currently in an event
             if (input != null && !manager.doingEvent())
             {
                 manager.parseInput(input);
             }
+            //If the player is dead ask if they user wants to restart
             if (!manager.player.isAlive())
             {
                 if (PlayAgain())

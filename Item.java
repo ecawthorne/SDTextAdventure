@@ -1,6 +1,8 @@
 //Basic item class. All items inherit from this.
 
 /**
+ * This is the base class for any items added in the game. Holds basic variables
+ * for storing information about items
  *
  * @author Eric
  * @author Chase
@@ -18,15 +20,23 @@ public class Item
     //going to add this canCarry boolean for future work, will have to be updated to include this eventually
     //private boolean canCarry = false;
     private boolean isContainer = false;
-    public Item()
-    {
-        this("Generic", "generic", true);
-    }
+
+    /**
+     *
+     * @param name Name of the item
+     * @param desc Description of the item
+     */
     public Item(String name, String desc)
     {
         this(name, desc, true);
     }
 
+    /**
+     *
+     * @param name Name of the item
+     * @param desc Description of the item
+     * @param isVisible If the item is visible
+     */
     public Item(String name, String desc, boolean isVisible)
     {
         this.name = name;
@@ -34,46 +44,82 @@ public class Item
         this.isVisible = isVisible;
     }
 
+    /**
+     *
+     * @param name Name of the item
+     */
     public void setName(String name)
     {
         this.name = name;
     }
 
+    /**
+     *
+     * @param desc Description of the item
+     */
     public void setDesc(String desc)
     {
         this.desc = desc;
     }
 
+    /**
+     *
+     * @return Returns the name of the item
+     */
     public String getName()
     {
         return name;
     }
 
+    /**
+     *
+     * @return Returns the description of the item
+     */
     public String getDesc()
     {
         return desc;
     }
 
+    /**
+     *
+     * @param isVisible Sets the visibility of the item
+     */
     public void setVisibility(boolean isVisible)
     {
         this.isVisible = isVisible;
     }
 
+    /**
+     *
+     * @return Returns the visibility of the item
+     */
     public boolean getVisibility()
     {
         return isVisible;
     }
 
+    /**
+     *
+     * @return Returns the type of item
+     */
     public boolean getContainerStatus()
     {
         return isContainer;
     }
 
+    /**
+     *
+     * @param containerStatus Sets the type of item
+     */
     public void setContainerStatus(boolean containerStatus)
     {
         isContainer = containerStatus;
     }
 
+    /**
+     *
+     * @param room
+     */
     public void open(Room room)
     {
         System.out.println("That object can't be opened!");

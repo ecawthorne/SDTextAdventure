@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
+ * Base class for the rooms in the game. Holds basic information about the rooms
+ * and the more generic methods that the child classes use
  *
  * @author Eric
  * @author Chase
@@ -40,23 +42,23 @@ abstract public class Room
     Room eastConnection = null;
     Room westConnection = null;
 
-    Room()
-    {
-
-        this("a generic room", "generic intro", "generic description");
-    }
-
-    Room(String n)
-    {
-        this(n, "generic intro", "generic description");
-    }
-
+    /**
+     * @param n Name of the room
+     * @param intro Intro for the room that the player sees when first entering
+     * the room
+     */
     Room(String n, String intro)
     {
         this.name = n;
         this.intro = intro;
     }
 
+    /**
+     * @param n Name of the room
+     * @param intro Intro for the room that the player sees when first entering
+     * the room
+     * @param desc Description of the room
+     */
     Room(String n, String intro, String desc)
     {
         this.name = n;
@@ -64,86 +66,116 @@ abstract public class Room
         this.internalDesc = desc;
     }
 
+    /**
+     *
+     * @param name Name of the room
+     */
     public void setName(String name)
     {
         this.name = name;
     }
 
+    /**
+     *
+     * @return Return the intro to the room
+     */
     public String getIntro()
     {
         return this.intro;
     }
 
+    /**
+     *
+     * @param intro Sets the intro to the room
+     */
     public void setIntro(String intro)
     {
         this.intro = intro;
     }
 
+    /**
+     *
+     * @param internalDesc Internal description of room
+     */
     public void setInternalDesc(String internalDesc)
     {
         this.internalDesc = internalDesc;
     }
 
+    //TODO Add external descriptions for rooms. These would be descriptions
+    //seen from adjacent rooms
+    /**
+     *
+     * @param externalDesc Descriptions of rooms seen from adjacent rooms
+     */
     public void setExternalDesc(String externalDesc)
     {
         this.externalDesc = externalDesc;
     }
 
+    /**
+     *
+     * @return Status of the condition for the player being able to leave the
+     * room
+     */
     public String getLeaveCond()
     {
         return leaveCond;
     }
 
+    /**
+     *
+     * @param leaveCond Condition for the player being allowed to leave the room
+     */
     public void setLeaveCond(String leaveCond)
     {
         this.leaveCond = leaveCond;
     }
 
+    /**
+     *
+     * @return Returns the name of the room
+     */
     public String getName()
     {
         return name;
     }
 
+    /**
+     *
+     * @return Description of the room
+     */
     public String getInternalDesc()
     {
         return internalDesc;
     }
 
+    /**
+     *
+     * @return Returns the external description of the room
+     */
     public String getExternalDesc()
     {
         return externalDesc;
     }
 
+    /**
+     * @param The direction in which to move
+     */
     boolean changeRoom(String direction)
     {
         return true;
     }
 
-    public boolean getRoomDesc()
-    {
-        /* Need to implement a way to hide certain items before using this
-        System.out.println(getInternalDesc());
-        for(int i = 0; i < items.length; i++)
-        {
-            System.out.println("You see a " + items[i].getName());
-        }
-         */
-        return true;
-    }
-    //unfinished method below searches files
-
-//    private String searchFile(int descLocator)
-//    {
-//        String text = null;
-//       Scanner search = new Scanner(ROOMDESCRIPTIONS);
-//        while (search.hasNext())
-//        {
-//
-//        }
-//        search.close();
-//        return text;
-//    }
-    //setter method for connections
+    /**
+     * Accepts a direction and a room object. Connects the room calling this
+     * method to the room passed as an argument. Sets the connection on both
+     * sides so the room passed is also connected to the room calling this
+     * method
+     *
+     * @param dir Direction to set the connection in
+     * @param connectedRoom Room to be connected to the room calling this method
+     */
     public void setConnection(int dir, Room connectedRoom)
     {
         switch (dir)
@@ -171,6 +203,11 @@ abstract public class Room
     }
     //return a room in the direction specified
 
+    /**
+     *
+     * @param direction Direction to check
+     * @return Returns the room connected in the direction passed
+     */
     public Room getConnection(int direction)
     {
         switch (direction)
@@ -189,36 +226,64 @@ abstract public class Room
 
     }
 
+    /**
+     *
+     * @param item Adds the item to the room's inventory
+     */
     public void addItem(Item item)
     {
         itemList.add(item);
     }
 
+    /**
+     *
+     * @param item Adds the container to the room's inventory
+     */
     public void addItem(ItemContainer item)
     {
         itemList.add(item);
     }
 
+    /**
+     *
+     * @param index Removes item at the passed index
+     */
     public void removeItem(int index)
     {
         itemList.remove(index);
     }
 
+    /**
+     *
+     * @param item Removes all items matching the passed item
+     */
     public void removeItem(Item item)
     {
         itemList.remove(item);
     }
 
+    /**
+     *
+     * @return Returns the room's inventory
+     */
     public ArrayList<Item> getItemList()
     {
         return itemList;
     }
 
+    /**
+     *
+     * @param itemList Sets the room's inventory
+     */
     public void setItemList(ArrayList<Item> itemList)
     {
         this.itemList = itemList;
     }
 
+    //TODO Improve this. Seems redundant with the getItems function already written
+    /**
+     * Prints all items present in the room
+     */
     public void printItems()
     {
         if (!itemList.isEmpty())
@@ -228,6 +293,10 @@ abstract public class Room
         }
     }
 
+    /**
+     *
+     * @return Returns a list of items in the room as a string
+     */
     public String getItems()
     {
         String visibleItems = "";
@@ -262,7 +331,11 @@ abstract public class Room
         return visibleItems;
     }
 
-    //Research this. XML tags a possiblility for descriptions and loger strings
+    //TODO Research this. XML tags a possiblility for descriptions and loger strings
+    /**
+     * Not currently in use
+     *
+     */
     public FileInputStream getFile()
     {
         try
@@ -276,58 +349,92 @@ abstract public class Room
         }
     }
 
+    /**
+     *
+     * @return Checks whether the player can leave the room or not
+     */
     public boolean isLeavable()
     {
         return leavable;
     }
 
+    /**
+     *
+     * @param flag Sets whether the player can leave the room or not
+     */
     public void setLeavable(boolean flag)
     {
         leavable = flag;
     }
 
-    //Override this in all subclasses
-    //Condition for leaving the room
+    /**
+     * Condition for leaving the room. Override this in all subclasses
+     *
+     * @param player Player object
+     */
     public void metLeaveCond(Player player)
     {
     }
 
-    //Override this in all subclasses
-    //Riddles to open locks, leave rooms, get items, etc.
-    public void doRiddle(Player player)
-    {
-
-    }
-
-    //Override this in all subclasses
+    /**
+     * Override this in all subclasses
+     *
+     * @return Returns the leave condition
+     */
     public String getLeaveCondition()
     {
         return null;
     }
 
     //return the enteredBefore variable
+    /**
+     * Used to check if the player has already been in a room. Prevents the
+     * room's intro and events from being played every time the player enters a
+     * room
+     *
+     * @return Returns whether the player has entered a room before or not
+     */
     public boolean getEntered()
     {
         return enteredBefore;
     }
 
+    /**
+     *
+     * @param enteredStatus Becomes true the first time the player enters a room
+     */
     public void setEntered(boolean enteredStatus)
     {
         enteredBefore = enteredStatus;
     }
 
+    /**
+     *
+     * @return Checks if the room has an event
+     */
     public boolean hasEvent()
     {
         return event;
     }
 
+    /**
+     *
+     * @param flag Sets if the room has an event
+     */
     public void setEventFlag(boolean flag)
     {
         event = flag;
     }
     //Override this in all subclasses
+
+    /**
+     * Executes the event if the current room has one
+     *
+     * @param manager Passed in order to set certain flags
+     * @param player Passed in order to modify the player's status or inventory
+     */
     public void doEvent(GameManager manager, Player player)
     {
-        
+
     }
 }

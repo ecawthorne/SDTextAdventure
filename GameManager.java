@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
+ * This class holds almost all of the logic of this game. Holds the player
+ * object, and handles input given to the program.
  *
  * @author Chase
  */
@@ -32,7 +34,9 @@ public class GameManager
 
     private boolean eventLive = false;
 
-    //No arguements passed when creating GameManager. Creates the currently implemented map
+    /**
+     * Default and only constructor. Creates the currently implemented map
+     */
     GameManager()
     {
         constructRooms();
@@ -40,6 +44,10 @@ public class GameManager
 
     //Description of then room given to the player when he first enters
     //Consider changing so that intro only prints on first entrance while others print everytime
+    /**
+     * Executes when the player enters a room. Runs through events in the room
+     * if there they are present. Lists intro to the room and and items present
+     */
     public void EnterRoom()
     {
         System.out.println("You have entered " + currentRoom.getName() + "\n");
@@ -131,19 +139,11 @@ public class GameManager
 
     }
 
-    //TODO Possibly redundant, remove if so
-    public boolean isGameOver()
-    {
-        return gameOver;
-    }
-
-    public void setGameOver(boolean gameOver)
-    {
-        this.gameOver = gameOver;
-    }
-
-    //Checks that  the input is valid
-    //and performs actions depending on entered values
+    /**
+     * Parses input and executes command. Holds most of the logic for the game
+     *
+     * @param input Command to be parsed
+     */
     public void parseInput(String input)
     {
         String[] command = input.split(" ");
@@ -379,12 +379,18 @@ public class GameManager
         }
     }
 
-    //print help message
+    /**
+     * Prints the help message
+     */
     public void getHelp()
     {
         System.out.println(HELPMESSAGE);
     }
 
+    /**
+     *
+     * @return Returns the current room
+     */
     public Room getCurrentRoom()
     {
         return currentRoom;
@@ -404,7 +410,7 @@ public class GameManager
      * move if condition has been met Otherwise, it prints what needs to be
      * done. If a room doesn't exist, then it informs the player
      *
-     * @param direction
+     * @param direction Direction to move
      */
     public void movePlayer(int direction)
     {
@@ -425,7 +431,9 @@ public class GameManager
         }
     }
 
-    //Constructs the game map and sets all connections
+    /**
+     * Constructs the game map and sets all connections
+     */
     final public void constructRooms()
     {
         //hardcode rooms built for game
@@ -444,16 +452,28 @@ public class GameManager
         System.exit(0);
     }
 
+    /**
+     *
+     * @return Player status
+     */
     public boolean isPlayerAlive()
     {
         return player.isAlive();
     }
 
+    /**
+     *
+     * @return If the player is currently in an event
+     */
     public boolean doingEvent()
     {
         return eventLive;
     }
 
+    /**
+     *
+     * @param eventStatus Sets this flag when the player enters an event
+     */
     public void setEventLive(boolean eventStatus)
     {
         eventLive = eventStatus;
