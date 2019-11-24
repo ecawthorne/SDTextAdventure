@@ -31,9 +31,12 @@ SamuraiStrike v0.2
 -Game start message was displaying each time you entered the first room, so a check has been added to see if it's the first time the player has been there.
 -Game will now catch failures for things like "open" followed by a blank, and force you to enter something.
 
-
-FIXED BUG(S):
--Inability to pass back to previous room fixed. Direction commands now all work correctly. Cardinal Direction numbers were confused in the code.
+==================
+SamuraiStrike v0.3.4
+==================
+-Fixed help command
+-Fixed exception for certain special characters
 
 KNOWN BUG(S):
 -All items, including the wardrobe(ItemContainer) can be taken, and will contain the item inside them until opened. Will be addressed in future versions.
+-Items in a room can be picked up and dropped multiple times, allowing all items to be duplicated.
