@@ -31,13 +31,6 @@ SamuraiStrike v0.2
 -Game start message was displaying each time you entered the first room, so a check has been added to see if it's the first time the player has been there.
 -Game will now catch failures for things like "open" followed by a blank, and force you to enter something.
 
-
-FIXED BUG(S):
--Inability to pass back to previous room fixed. Direction commands now all work correctly. Cardinal Direction numbers were confused in the code.
-
-KNOWN BUG(S):
--All items, including the wardrobe(ItemContainer) can be taken, and will contain the item inside them until opened. Will be addressed in future versions.
-
 ==================
 SamuraiStrike v0.3
 ==================
@@ -84,6 +77,19 @@ Minor bug fixes.
 
 FIXED BUG(S):
 -Infinite loop after ogre encounter.
+
+KNOWN BUG(S):
++Possible reason: new boolean added but not updated.
+-Inventory command missing.
+-Item pickup glitch.
+-Item drop glitch.
+-Container pickup glitch.
+
+==================
+SamuraiStrike v0.3.4
+==================
+-Fixed help command
+-Fixed exception that was occuring when certain certain special characters were entered as input
 
 KNOWN BUG(S):
 +Possible reason: new boolean added but not updated.
