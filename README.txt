@@ -79,7 +79,6 @@ FIXED BUG(S):
 -Infinite loop after ogre encounter.
 
 KNOWN BUG(S):
-+Possible reason: new boolean added but not updated.
 -Inventory command missing.
 -Item pickup glitch.
 -Item drop glitch.
@@ -92,7 +91,6 @@ SamuraiStrike v0.3.4
 -Fixed exception that was occuring when certain certain special characters were entered as input
 
 KNOWN BUG(S):
-+Possible reason: new boolean added but not updated.
 -Inventory command missing.
 -Item pickup glitch.
 -Item drop glitch.
