@@ -95,3 +95,19 @@ KNOWN BUG(S):
 -Item pickup glitch.
 -Item drop glitch.
 -Container pickup glitch.
+
+==================
+SamuraiStrike v0.3.5
+==================
+-Added Forest Room
+-Added Banshee Room (dummy class)
+-Added class for non player characters called NPChars
+-Fixed item containers being movable
+-Added functionality to parser
+
+KNOWN BUG(S):
+-Inventory command missing.
+-Item pickup glitch.
+-Item drop glitch.
+-Moving out of the forest room sometimes has some odd behavior, have not been able to
+reproduce so still under investigation
