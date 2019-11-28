@@ -53,11 +53,12 @@ public class GameManager
         System.out.println("You have entered " + currentRoom.getName() + "\n");
         if (!currentRoom.getEntered())
         {
-            System.out.println(currentRoom.getIntro() + "\n"); //returns null for rooms besides initial room because we don't set it.
+            System.out.println(currentRoom.getIntro() + "\n"); //returns null for rooms besides initial room                //because we don't set it.
             currentRoom.setEntered(true);
         }
-        //Iterates through the items in the rooms, printing each elements name
+        //Iterates through the items and characters in the rooms, printing each elements name
         currentRoom.printItems();
+        currentRoom.printChars();
         //Checks if the current room has exits in each direction, if it does,
         //print the room name in that direction
         for (int i = 1; i <= 4; i++)
@@ -233,6 +234,14 @@ public class GameManager
                     System.out.println("Examine what?");
                     examineItem(keyboard.nextLine());
                 }
+            } else if (command[0].equalsIgnoreCase("talk"))
+            {
+                String[] inputArray = command;
+                inputArray = forceArraySize(inputArray);
+                if (inputArray[1] != null && !inputArray[1].isEmpty())
+                {
+                    talkTo(inputArray[1]);
+                }
             } else if (command[0].equalsIgnoreCase("look"))
             {
                 look();
@@ -349,6 +358,7 @@ public class GameManager
             }
         }
         currentRoom.printItems();
+        currentRoom.printChars();
     }
 
     /**
@@ -373,9 +383,32 @@ public class GameManager
     {
         if (find(toTake) != null)
         {
-            player.addItem(find(toTake));
-            System.out.println("You got the " + find(toTake).getName() + ".");
-            currentRoom.removeItem(find(toTake));
+            if (!find(toTake).isMovable())
+            {
+                System.out.println("You can't move that");
+            } else
+            {
+                player.addItem(find(toTake));
+                System.out.println("You got the " + find(toTake).getName() + ".");
+                currentRoom.removeItem(find(toTake));
+            }
+        }
+    }
+
+    //Talks to the character, set the talked to flag and kill the character if necessary
+    public void talkTo(String name)
+    {
+        if (currentRoom.findChar(name) != null && currentRoom.findChar(name).isVisible())
+        {
+            System.out.println(currentRoom.findChar(name).getDIALOGUE());
+            currentRoom.findChar(name).setTalkedTo(true);
+            if (currentRoom.findChar(name).killed())
+            {
+                currentRoom.findChar(name).killChar();
+            }
+        } else
+        {
+            System.out.println("That character doesn't exist!");
         }
     }
 
@@ -415,8 +448,10 @@ public class GameManager
     public void movePlayer(int direction)
     {
         Room toMove = currentRoom.getConnection(direction);
-        //what is the below line here for?
+        //Checks that the condition for leaving the room has been met and allows the player
+        //to leave if the condition has been met
         currentRoom.metLeaveCond(player);
+
         if (!currentRoom.isLeavable())
         {
             System.out.println(currentRoom.getLeaveCondition());
@@ -432,7 +467,7 @@ public class GameManager
     }
 
     /**
-     * Constructs the game map and sets all connections
+     * Constructs the initial game map and sets all connections
      */
     final public void constructRooms()
     {
@@ -440,9 +475,11 @@ public class GameManager
         //example below
         InitialRoom mainRoom = new InitialRoom();
         VillageRoom village = new VillageRoom();
+        ForestRoom forest = new ForestRoom();
         currentRoom = mainRoom;
         //Direction should be checked. Just setting in order to test
         mainRoom.setConnection(1, village);
+        village.setConnection(1, forest);
     }
 
     //ToDo: Consider adding different game over messages
