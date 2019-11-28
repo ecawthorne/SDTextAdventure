@@ -398,7 +398,7 @@ public class GameManager
     //Talks to the character, set the talked to flag and kill the character if necessary
     public void talkTo(String name)
     {
-        if (currentRoom.findChar(name) != null && currentRoom.findChar(name).isVisible())
+        if (currentRoom.findChar(name) != null && currentRoom.findChar(name).getVisibility())
         {
             System.out.println(currentRoom.findChar(name).getDIALOGUE());
             currentRoom.findChar(name).setTalkedTo(true);

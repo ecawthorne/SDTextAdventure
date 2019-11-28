@@ -10,16 +10,21 @@ import java.util.HashMap;
  */
 public class SynonymFinder
 {
-    /**These are the commands that the parser can recognize*/
+
+    /**
+     * These are the commands that the parser can recognize
+     */
     String[] words = new String[]
     {
         "quit", "help", "go", "north", "east", "south",
         "west", "take", "drop", "examine", "open",
-        "up", "down", "look"
+        "up", "down", "look", "talk"
     };
     //ToDo: Multi word strings probably break the parser, investigate as soon as possible
-    /**Alternative words or characters that the player can enter and that will
-     be converted to commands*/
+    /**
+     * Alternative words or characters that the player can enter and that will
+     * be converted to commands
+     */
     String[][] syns = new String[][]
     {
         {
@@ -63,10 +68,16 @@ public class SynonymFinder
         },
         {
             "l"
+        },
+        {
+            "speak"
         }
     };
     HashMap<String, String> synList;
-    /**Matches the commands to the alternative words or characters entered*/
+
+    /**
+     * Matches the commands to the alternative words or characters entered
+     */
     SynonymFinder()
     {
         synList = new HashMap<>();

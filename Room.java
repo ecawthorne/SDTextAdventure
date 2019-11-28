@@ -6,18 +6,18 @@ import java.util.ArrayList;
 
 /**
  * Base class for the rooms in the game. Holds basic information about the rooms
- * and the more generic methods that the child classes use
+ * and the more generic methods that child classes use
  *
  * @author Eric
  * @author Chase
  */
 abstract public class Room
 {
-//    file variable for containing descriptions
-//    Gets file and handles possible exception. Do this in third sprint
-//    final FileInputStream ROOMDESCRIPTIONS = getFile();
 
+    //List of items in the room
     private ArrayList<Item> itemList = new ArrayList<>();
+    //List of characters in the room
+    private ArrayList<NPChar> charList = new ArrayList<>();
     //Name of this room
     private String name = null;
     //Introduction to the room if there is one
@@ -230,18 +230,27 @@ abstract public class Room
      *
      * @param item Adds the item to the room's inventory
      */
-    public void addItem(Item item)
+    public void addObject(Item item)
     {
-        itemList.add(item);
+        this.itemList.add(item);
     }
 
     /**
      *
      * @param item Adds the container to the room's inventory
      */
-    public void addItem(ItemContainer item)
+    public void addObject(ItemContainer item)
     {
-        itemList.add(item);
+        this.itemList.add(item);
+    }
+
+    /**
+     *
+     * @param npc Adds the character to the room's inventory
+     */
+    public void addObject(NPChar npc)
+    {
+        this.charList.add(npc);
     }
 
     /**
@@ -311,7 +320,7 @@ abstract public class Room
                 {
                     //if it is an item list, this below method will run
                     ArrayList<Item> containerList = ((ItemContainer) itemList.get(i)).getItemList();
-                    //add each item inside the container to the visible list, if it isn't invisible for some reason
+                    //add each item inside the container to the visible list, if it isn't invisible for some                        //reason
                     if (containerList != null)
                     {
                         for (int j = 0; j < containerList.size(); j++)
@@ -329,6 +338,57 @@ abstract public class Room
         visibleItems += "\n";
         //for loop printing item list
         return visibleItems;
+    }
+
+    //Finds an item by name
+    public Item findItem(String ItemName)
+    {
+        for (Item itemList1 : itemList)
+        {
+            if (itemList1.getName().equalsIgnoreCase(ItemName))
+            {
+                return itemList1;
+            }
+        }
+        return null;
+    }
+
+    //Finds an character by name
+    public NPChar findChar(String charName)
+    {
+        for (NPChar npc : charList)
+        {
+            if (npc.getName().equalsIgnoreCase(charName))
+            {
+                return npc;
+            }
+        }
+        return null;
+    }
+
+    public void printChars()
+    {
+        if (!charList.isEmpty())
+        {
+            System.out.println("The following characters are in this room: ");
+            System.out.println(getChars());
+        }
+    }
+
+    public String getChars()
+    {
+        String visibleChars = "";
+        if (!charList.isEmpty())
+        {
+            for (int i = 0; i < charList.size(); i++)
+            {
+                if (charList.get(i).getVisibility())
+                {
+                    visibleChars += "-" + charList.get(i).getName() + " \n";
+                }
+            }
+        }
+        return visibleChars;
     }
 
     //TODO Research this. XML tags a possiblility for descriptions and loger strings

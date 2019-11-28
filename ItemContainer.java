@@ -23,12 +23,12 @@ public class ItemContainer extends Item
     public ItemContainer(String name, String desc)
     {
         //set it so it's default visible
-        super(name, desc, true);
+        super(name, desc, true, false);
         this.heldItems = new ArrayList<>();
         //set it so it's not locked by default
         this.locked = false;
 
-        setContainerStatus(true);
+        super.setContainerStatus(true);
     }
 
     /**
@@ -40,11 +40,11 @@ public class ItemContainer extends Item
      */
     public ItemContainer(String name, String desc, boolean isVisible, boolean locked)
     {
-        super(name, desc, isVisible);
+        super(name, desc, isVisible, false);
         this.heldItems = new ArrayList<>();
         this.locked = locked;
 
-        setContainerStatus(true);
+        super.setContainerStatus(true);
     }
 
     /**
@@ -106,7 +106,7 @@ public class ItemContainer extends Item
             System.out.println("You've opened the " + getName());
             System.out.println("Inside was: ");
             heldItems.forEach((n) -> System.out.println("-" + n.getName()));
-            heldItems.forEach((n) -> room.addItem(n));
+            heldItems.forEach((n) -> room.addObject(n));
             heldItems = null;
         } else if (isLocked())
         {

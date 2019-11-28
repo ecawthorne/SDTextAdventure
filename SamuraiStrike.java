@@ -3,16 +3,18 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
- * Execution starts in this class. Holds versioning information and intro to game
+ * Execution starts in this class. Holds versioning information and intro to
+ * game
+ *
  * @author Eric
  * @author Chase
- * @version 0.3.4
+ * @version 0.3.5
  */
 public class SamuraiStrike
 {
     //update the version number below
 
-    final static String VERSIONNUMBER = "v0.3.4";
+    final static String VERSIONNUMBER = "v0.3.5";
     //GAMEINTRO is printed once, at the beginning of the game
     final static String GAMEINTRO = "Welcome to the Software Samurai text-based game, Samurai Strike " + VERSIONNUMBER + "! \n "
             + "Thanks for playing! \n "
@@ -86,7 +88,7 @@ public class SamuraiStrike
             {
                 manager.parseInput(input);
             }
-            //If the player is dead ask if they user wants to restart
+            //If the player is dead ask if the user wants to restart
             if (!manager.player.isAlive())
             {
                 if (PlayAgain())
@@ -95,7 +97,7 @@ public class SamuraiStrike
                 }
             }
         }
-
+        
     }
 
 }

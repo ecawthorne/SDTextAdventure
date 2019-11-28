@@ -85,7 +85,7 @@ public class Player
      */
     public void dropItem(Room room, Item item)
     {
-        room.addItem(item);
+        room.addObject(item);
         remItem(item);
     }
 
