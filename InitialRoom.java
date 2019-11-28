@@ -29,9 +29,9 @@ class InitialRoom extends Room
         ItemContainer wardrobe = new ItemContainer("Wardrobe", "It's a wardrobe.");
         wardrobe.addItem(new Item("Pitchfork", "The pitchfork can be used in "
                 + "battles or when cultivating. Be wise with it!"));
-        super.addItem(wardrobe);
+        super.addObject(wardrobe);
 
-        super.addItem(new Item("Mirror", "You look handsome...but burnt."));
+        super.addObject(new Item("Mirror", "You look handsome...but burnt."));
 
         super.setLeavable(false);
     }
@@ -59,7 +59,7 @@ class InitialRoom extends Room
         {
             if (pItemList.get(i).getName().equals("Pitchfork"))
             {
-                setLeavable(true);
+                super.setLeavable(true);
             }
         }
     }
