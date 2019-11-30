@@ -25,10 +25,11 @@ public class GameManager
     final String HELPMESSAGE = "You can use the following commands: "
             + "-\'go\' will go in the cardinal direction you enter\n"
             + "-\'take <item>\' will allow you to pick up items in the room\n"
-            + "-\'drop <item\' will remove an item from your inventory."
-            + "-\'i\' will display your inventory."
+            + "-\'drop <item\' will remove an item from your inventory.\n"
+            + "-\'i\' will display your inventory.\n"
             + "-\'open <item>\' will allow you to open a container.\n"
-            + "-\'examine <item>\' will provide more detail about an item."
+            + "-\'examine <item>\' will provide more detail about an item.\n"
+            + "-\'talk <character>\' will speak with the character.\n"
             + "-\'l\' will look, providing a description of the room. \n"
             + "-\'q\' will quit the game. \n";
 
