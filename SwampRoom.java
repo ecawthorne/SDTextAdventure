@@ -9,13 +9,12 @@ import java.util.Random;
 public class SwampRoom extends Room
 {
     
-    Item heroSword = new Item("Hero's Sword", "This excellent sword glows"
+    Item heroSword = new Item("Valiant", "This excellent sword glows"
     + " with a holy light. " 
     + "It is sharper than the night.", false, false);
 
-    SwampRoom(String name, String desc)
+    SwampRoom()
     {
-        
         super("Swamp", "In front of you, is a murky swamp, with a"
         + " massive alligator relaxing within.");
         super.setInternalDesc("Your boots sink into the murk. Ew.");
@@ -27,7 +26,8 @@ public class SwampRoom extends Room
         + " Tornado-Harnessing Knight who Vanquishes the Forever"
         + " Dark... Or maybe you're just hallucinating"
         + ".", "Alligator: Go save your friend, hero.", false));
-    }
+        super.setEventFlag(true);
+        }
 
     @Override
     public void doEvent(GameManager manager, Player player)
@@ -44,6 +44,7 @@ public class SwampRoom extends Room
         + "\n\nIf the red house is made of red bricks,"
         + " and the yellow house is made of yellow bricks,"
         + " what is the greenhouse made of?");
+        System.out.print("What do you want to do?\n>");
         while(!keyboard.nextLine().equalsIgnoreCase("glass") && player.isAlive())
         {
             if (randNum.nextInt(7) == killPlayer)
@@ -66,7 +67,9 @@ public class SwampRoom extends Room
 
             heroSword.setVisibility(true);
             heroSword.setMovable(true);
+            manager.setEventLive(false);
+            super.setLeavable(true);
+            super.setEventFlag(false);
         }
-        keyboard.close();
     }
 }
