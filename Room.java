@@ -391,24 +391,6 @@ abstract public class Room
         return visibleChars;
     }
 
-    //TODO Research this. XML tags a possiblility for descriptions and loger strings
-    /**
-     * Not currently in use
-     *
-     */
-    public FileInputStream getFile()
-    {
-        try
-        {
-            FileInputStream roomFile = new FileInputStream("roomDescriptions.txt");
-            return roomFile;
-        } catch (FileNotFoundException e)
-        {
-            System.out.println("Room descriptions not found");
-            return null;
-        }
-    }
-
     /**
      *
      * @return Checks whether the player can leave the room or not
@@ -496,5 +478,10 @@ abstract public class Room
     public void doEvent(GameManager manager, Player player)
     {
 
+    }
+
+    ArrayList<NPChar> getCharList()
+    {
+        return charList;
     }
 }

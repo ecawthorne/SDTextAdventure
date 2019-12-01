@@ -18,7 +18,7 @@ public class SynonymFinder
     {
         "quit", "help", "go", "north", "east", "south",
         "west", "take", "drop", "examine", "open",
-        "up", "down", "look", "talk"
+        "up", "down", "look", "talk", "inv", "use"
     };
     //ToDo: Multi word strings probably break the parser, investigate as soon as possible
     /**
@@ -71,6 +71,12 @@ public class SynonymFinder
         },
         {
             "speak"
+        },
+        {
+            "inventory", "i", "items"
+        },
+        {
+            "u"
         }
     };
     HashMap<String, String> synList;

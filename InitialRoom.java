@@ -31,7 +31,7 @@ class InitialRoom extends Room
                 + "battles or when cultivating. Be wise with it!"));
         super.addObject(wardrobe);
 
-        super.addObject(new Item("Mirror", "You look handsome...but burnt."));
+        super.addObject(new Item("Mirror", "You look handsome...but burnt.", true, false));
 
         super.setLeavable(false);
     }

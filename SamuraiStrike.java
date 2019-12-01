@@ -70,7 +70,10 @@ public class SamuraiStrike
         String input;
         while (true)
         {
-
+            if (!manager.getCurrentRoom().isLeavable())
+            {
+                manager.getCurrentRoom().metLeaveCond(manager.getPlayer());
+            }
             System.out.println();
             System.out.println("What do you want to do?");
             System.out.print(">");
@@ -97,7 +100,7 @@ public class SamuraiStrike
                 }
             }
         }
-        
+
     }
 
 }
