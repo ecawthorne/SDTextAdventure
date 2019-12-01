@@ -7,9 +7,9 @@ PROGRAM SUMMARY
 ===============
 Text-based adventure game for CSCI 3315. Current name: Samurai Strike.
 The player will solve puzzles and riddles in order to advance further throughout the world of Samurai Strike, encountering enemies and finding love along the way!
-==================
-SamuraiStrike v0.1
-==================
+====================
+SamuraiStrike v0.1.0
+====================
 -Currently the Room class is in development, but they are doubly linked, so it is possible to pass between rooms. Also have leave conditions for some rooms. Leavable defaults to false.
 -Item class is able to contain a name and description.
 -Player class contains an inventory and can add items to it.
@@ -20,9 +20,9 @@ SamuraiStrike v0.1
 KNOWN BUG(S): 
 -For some reason, passing south back to the main room returns null. Issue will be patched in next version.
 
-==================
-SamuraiStrike v0.2
-==================
+====================
+SamuraiStrike v0.2.0
+====================
 -ItemContainer now contains items that are unable to be seen until opened. Does not allow player to put them back yet.
 -Drop function implemented so the player can remove items from inventory.
 -Find function implemented so we do not need to iterate constantly throughout the code. Makes the code easier to read with doThis(find(namedItem)) functions rather than huge loops.
@@ -31,9 +31,9 @@ SamuraiStrike v0.2
 -Game start message was displaying each time you entered the first room, so a check has been added to see if it's the first time the player has been there.
 -Game will now catch failures for things like "open" followed by a blank, and force you to enter something.
 
-==================
-SamuraiStrike v0.3
-==================
+====================
+SamuraiStrike v0.3.0
+====================
 -SynonymFinder class added to allow players to enter various different commands for the same results.
 -Ogre encounter now implemented.
 -Main game loop handling has been changed.
@@ -84,9 +84,9 @@ KNOWN BUG(S):
 -Item drop glitch.
 -Container pickup glitch.
 
-==================
+====================
 SamuraiStrike v0.3.4
-==================
+====================
 -Fixed help command
 -Fixed exception that was occuring when certain certain special characters were entered as input
 
@@ -96,9 +96,10 @@ KNOWN BUG(S):
 -Item drop glitch.
 -Container pickup glitch.
 
-==================
+
+====================
 SamuraiStrike v0.3.5
-==================
+====================
 -Added Forest Room
 -Added Banshee Room (dummy class)
 -Added class for non player characters called NPChars
@@ -111,3 +112,16 @@ KNOWN BUG(S):
 -Item drop glitch.
 -Moving out of the forest room sometimes has some odd behavior, have not been able to
 reproduce so still under investigation
+
+====================
+SamuraiStrike v0.3.6
+====================
+-Added Swamp Room
+-Fixed repetitive output.
+-Fixed infinite item glitch.
+-Started the Banshee room.
+-Refactored parser.
+-Added Inventory command back to game.
+
+KNOWN BUG(S):
+-Add nonexistent items to inventory.

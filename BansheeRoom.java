@@ -7,6 +7,7 @@
 /**
  *
  * @author Eric
+ * @author Chase
  */
 public class BansheeRoom extends Room
 {
