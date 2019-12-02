@@ -122,6 +122,15 @@ SamuraiStrike v0.3.6
 -Started the Banshee room.
 -Refactored parser.
 -Added Inventory command back to game.
+-Added use command
+
+KNOWN BUG(S):
+-Add nonexistent items to inventory.
+
+====================
+SamuraiStrike v0.3.6
+====================
+-Added Banshee Room
 
 KNOWN BUG(S):
 -Add nonexistent items to inventory.
