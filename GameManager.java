@@ -51,12 +51,10 @@ public class GameManager
         InitialRoom mainRoom = new InitialRoom();
         VillageRoom village = new VillageRoom();
         ForestRoom forest = new ForestRoom();
-        SwampRoom swamp = new SwampRoom();
         currentRoom = mainRoom;
         //Direction should be checked. Just setting in order to test
         mainRoom.setConnection(1, village);
         village.setConnection(1, forest);
-        swamp.setConnection(3, mainRoom);
     }
 
     //Description of then room given to the player when he first enters

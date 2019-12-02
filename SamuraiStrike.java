@@ -8,13 +8,13 @@ import java.util.Scanner;
  *
  * @author Eric
  * @author Chase
- * @version 0.3.5
+ * @version 0.3.7
  */
 public class SamuraiStrike
 {
     //update the version number below
 
-    final static String VERSIONNUMBER = "v0.3.5";
+    final static String VERSIONNUMBER = "v0.3.7";
     //GAMEINTRO is printed once, at the beginning of the game
     final static String GAMEINTRO = "Welcome to the Software Samurai text-based game, Samurai Strike " + VERSIONNUMBER + "! \n "
             + "Thanks for playing! \n "
