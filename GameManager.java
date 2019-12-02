@@ -28,6 +28,7 @@ public class GameManager
             + "-\'open <item>\' will allow you to open a container.\n"
             + "-\'examine <item>\' will provide more detail about an item.\n"
             + "-\'talk <character>\' will speak with the character.\n"
+            + "-\'use <item>\' on <character>\' will use the item on the character.\n"
             + "-\'l\' will look, providing a description of the room. \n"
             + "-\'q\' will quit the game. \n";
     //If the player is currently doing an event
