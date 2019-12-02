@@ -12,17 +12,15 @@ import javafx.util.Pair;
 public class GameManager
 {
 
-    Scanner keyboard = new Scanner(System.in);
+    private Scanner keyboard = new Scanner(System.in);
     //The room the player is currently in. Player starts in his house which is InitialRoom
     private Room currentRoom = null;
-    String input = null;
-    //TODO Probably redundant. Check and remove if it is
-    private boolean gameOver = false;
+    private String input = null;
     //Player Object. Name, player inventory, and player status stored here
     Player player = new Player();
     //Stores a list of possible synonyms. Should only be used inside of parseInput
-    SynonymFinder synFinder = new SynonymFinder();
-    final String HELPMESSAGE = "You can use the following commands: "
+    private SynonymFinder synFinder = new SynonymFinder();
+    final private String HELPMESSAGE = "You can use the following commands: "
             + "-\'go\' will go in the cardinal direction you enter\n"
             + "-\'take <item>\' will allow you to pick up items in the room\n"
             + "-\'drop <item\' will remove an item from your inventory.\n"
@@ -53,10 +51,12 @@ public class GameManager
         InitialRoom mainRoom = new InitialRoom();
         VillageRoom village = new VillageRoom();
         ForestRoom forest = new ForestRoom();
+        SwampRoom swamp = new SwampRoom();
         currentRoom = mainRoom;
         //Direction should be checked. Just setting in order to test
         mainRoom.setConnection(1, village);
         village.setConnection(1, forest);
+        swamp.setConnection(3, mainRoom);
     }
 
     //Description of then room given to the player when he first enters
@@ -334,14 +334,12 @@ public class GameManager
         ArrayList<Item> roomItemList = currentRoom.getItemList();
         ArrayList<NPChar> charList = currentRoom.getCharList();
         ArrayList<Item> playerItemList = player.getItemList();
-        Pair<Item, Integer> toReturn = new Pair<Item,Integer>(new Item("", ""), -1);
-        boolean itemFound = false;
+        Pair<Item, Integer> toReturn = new Pair<>(new Item("", ""), -1);
         //search for the item
         for (int i = 0; i < roomItemList.size(); i++)
         {
             if (roomItemList.get(i).getName().equalsIgnoreCase(toFind))
             {
-                itemFound = true;
                 toReturn = new Pair<>(roomItemList.get(i), 0);
             }
         }
@@ -349,7 +347,6 @@ public class GameManager
         {
             if (playerItemList.get(i).getName().equalsIgnoreCase(toFind))
             {
-                itemFound = true;
                 toReturn = new Pair<>(playerItemList.get(i), 1);
             }
         }
@@ -357,19 +354,11 @@ public class GameManager
         {
             if (charList.get(i).getName().equalsIgnoreCase(toFind))
             {
-                itemFound = true;
                 toReturn = new Pair<>(charList.get(i), 2);
             }
         }
         //return either the item or a null with a message
-        if (itemFound)
-        {
-            return toReturn;
-        } else
-        {
-            System.out.println("That item doesn't exist!");
-            return toReturn;
-        }
+        return toReturn;
 
     }
 
@@ -441,29 +430,28 @@ public class GameManager
      */
     public void takeItem(String toTake)
     {
-        if (find(toTake) != null)
+
+        if (!find(toTake).getKey().isMovable())
         {
-            if (!find(toTake).getKey().isMovable())
+            System.out.println("You can't move that");
+        } else
+        {
+            if (find(toTake).getValue() == 0)
             {
-                System.out.println("You can't move that");
+                player.addItem(find(toTake).getKey());
+                System.out.println("You got the " + find(toTake).getKey().getName() + ".");
+                currentRoom.removeItem(find(toTake).getKey());
             } else
             {
-                if (find(toTake) != null && find(toTake).getValue() != 1)
-                {
-                    player.addItem(find(toTake).getKey());
-                    System.out.println("You got the " + find(toTake).getKey().getName() + ".");
-                    currentRoom.removeItem(find(toTake).getKey());
-                } else
-                {
-                    System.out.println("That item doesn't exist!");
-                }
+                System.out.println("That item doesn't exist!");
             }
         }
+
     }
 
     public void useItem(String[] itemAndTarget)
     {
-        if (itemAndTarget == null || itemAndTarget.length < 4)
+        if (itemAndTarget == null || itemAndTarget.length != 4)
         {
             System.out.println("I don't understand that!");
         } else if (find(itemAndTarget[1]).getValue() == -1 || find(itemAndTarget[3]).getValue() == -1)

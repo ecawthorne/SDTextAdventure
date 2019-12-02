@@ -73,16 +73,19 @@ public class NPChar extends Item
     public void addStatus(String status)
     {
         itemStatuses.add(status);
-        //This can be improved if more items are added
-        if ("SleepingPotion".equalsIgnoreCase(status))
-        {
-            System.out.println(super.getName() + " has fallen asleep!");
-        }
     }
-    public ArrayList<String> getStatuses()
+
+    public boolean hasStatus(String name)
     {
-        return itemStatuses;
-        
+        boolean flag = false;
+        for (int i = 0; i < itemStatuses.size(); i++)
+        {
+            if(itemStatuses.get(i).equalsIgnoreCase(name))
+            {
+                flag = true;
+            }
+        }
+        return flag;
     }
 
 }

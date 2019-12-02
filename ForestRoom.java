@@ -31,11 +31,20 @@ public class ForestRoom extends Room
     @Override
     public void metLeaveCond(Player player)
     {
-        if(super.findChar("Martin").isTalkedTo() && super.findChar("Woman").isTalkedTo())
+        if (super.findChar("Martin").isTalkedTo() && super.findChar("Woman").isTalkedTo())
         {
-            this.setConnection(4, new BansheeRoom("Banshee's Cave", "Put stuff here"));
+            this.setConnection(4, new BansheeRoom());
             super.setLeavable(true);
             System.out.println("You can now enter the Banshee's cave");
+        }
+        for (Item itemList : player.getItemList())
+        {
+            if (itemList.getName().equalsIgnoreCase("baby"))
+            {
+                this.setConnection(3, new SwampRoom());
+                System.out.println("You see a path that wasn't visible before! You can now enter the swamp");
+            }
+
         }
     }
 }

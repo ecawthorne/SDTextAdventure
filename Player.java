@@ -71,11 +71,22 @@ public class Player
 
     /**
      *
-     * @param item Removes items from the players inventory
+     * @param item Item to be removed
      */
     public void remItem(Item item)
     {
         itemList.remove(item);
+    }
+
+    public void remItem(String itemName)
+    {
+        for (int i = 0; i < itemList.size(); i++)
+        {
+            if (itemList.get(i).getName().equalsIgnoreCase(itemName))
+            {
+                itemList.remove(i);
+            }
+        }
     }
 
     /**

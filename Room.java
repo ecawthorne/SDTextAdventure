@@ -1,7 +1,5 @@
 //Basic room class. Every room inherits from this.
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +15,7 @@ abstract public class Room
     //List of items in the room
     private ArrayList<Item> itemList = new ArrayList<>();
     //List of characters in the room
-    private ArrayList<NPChar> charList = new ArrayList<>();
+    ArrayList<NPChar> charList = new ArrayList<>();
     //Name of this room
     private String name = null;
     //Introduction to the room if there is one
